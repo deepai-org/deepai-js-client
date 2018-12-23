@@ -1,9 +1,13 @@
 {
   "name": "deepai",
   "version": "0.0.1",
+  "license": "BSD-2-Clause",
   "repository": {
     "type": "git",
     "url": "https://github.com/deepai-org/deepai-js-client.git"
   },
-  "homepage": "https://github.com/deepai-org/deepai-js-client"
+  "homepage": "https://github.com/deepai-org/deepai-js-client",
+  "dependencies": {
+    "axios": "0.18.0"
+  }
 }
