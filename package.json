@@ -1,13 +1,16 @@
 {
   "name": "deepai",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "BSD-2-Clause",
   "repository": {
     "type": "git",
     "url": "https://github.com/deepai-org/deepai-js-client.git"
   },
-  "homepage": "https://github.com/deepai-org/deepai-js-client",
-  "dependencies": {},
+  "homepage": "https://deepai.org/",
+  "dependencies": {
+    "axios": "0.18.0",
+    "form-data": "2.3.3"
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^6.2.2",
@@ -24,9 +27,7 @@
     "grunt-webpack": "^1.0.18",
     "load-grunt-tasks": "^3.5.2",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1",
-    "axios": "0.18.0",
-    "form-data": "2.3.3"
+    "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
     "build": "NODE_ENV=production grunt build",
