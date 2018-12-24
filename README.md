@@ -1,4 +1,6 @@
 # DeepAI JS Client
+[![npm version](https://img.shields.io/npm/v/deepai.svg?style=flat-square)](https://www.npmjs.org/package/deepai)
+
 Simple Javascript Client Library for [Deep AI's](https://deepai.org) APIs from Browser and Node.js
 
 ## Installation:
