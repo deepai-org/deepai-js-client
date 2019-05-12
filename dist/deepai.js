@@ -9332,7 +9332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var utils = __webpack_require__(333);
 	var DeepAI = __webpack_require__(335);
-	var defaults = __webpack_require__(367);
+	var defaults = __webpack_require__(369);
 	var bind = __webpack_require__(334);
 	
 	/**
@@ -9733,6 +9733,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var formData = __webpack_require__(366);
 	// const Buffer = require('buffer/').Buffer; // note: the trailing slash is important!
 	
+	var apiBaseUrl = __webpack_require__(367).baseUrl;
+	var resultRendering = __webpack_require__(368);
+	
 	var globalObject = Function('return this')();
 	
 	/**
@@ -9751,7 +9754,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	function urlForModel(model_name) {
-	    return "https://api.deepai.org/api/" + model_name;
+	    return apiBaseUrl + "/api/" + model_name;
 	}
 	
 	DeepAI.prototype.callStandardApi = function () {
@@ -9762,61 +9765,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	            while (1) {
 	                switch (_context.prev = _context.next) {
 	                    case 0:
-	                        if (this.apiKey) {
-	                            _context.next = 2;
-	                            break;
-	                        }
-	
-	                        throw new Error("DeepAI error: apiKey should be first set with deepai.setApiKey(...)");
-	
-	                    case 2:
 	                        form = new formData();
 	                        _iteratorNormalCompletion = true;
 	                        _didIteratorError = false;
 	                        _iteratorError = undefined;
-	                        _context.prev = 6;
+	                        _context.prev = 4;
 	                        _iterator = Object.keys(inputs_object)[Symbol.iterator]();
 	
-	                    case 8:
+	                    case 6:
 	                        if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-	                            _context.next = 49;
+	                            _context.next = 47;
 	                            break;
 	                        }
 	
 	                        key = _step.value;
 	
 	                        if (!(inputs_object[key] === null || inputs_object[key] === undefined)) {
-	                            _context.next = 12;
+	                            _context.next = 10;
 	                            break;
 	                        }
 	
-	                        return _context.abrupt('continue', 46);
+	                        return _context.abrupt('continue', 44);
 	
-	                    case 12:
+	                    case 10:
 	                        if (!(typeof inputs_object[key] === 'string')) {
-	                            _context.next = 16;
+	                            _context.next = 14;
 	                            break;
 	                        }
 	
 	                        form.append(key, inputs_object[key]); // a string could be a URL or just some text data. both are OK
-	                        _context.next = 46;
+	                        _context.next = 44;
 	                        break;
 	
-	                    case 16:
+	                    case 14:
 	                        if (!(globalObject.Element && inputs_object[key] instanceof globalObject.Element)) {
-	                            _context.next = 37;
+	                            _context.next = 35;
 	                            break;
 	                        }
 	
 	                        element = inputs_object[key];
 	
 	                        if (!(element.tagName === 'IMG')) {
-	                            _context.next = 26;
+	                            _context.next = 24;
 	                            break;
 	                        }
 	
 	                        if (!element.src) {
-	                            _context.next = 23;
+	                            _context.next = 21;
 	                            break;
 	                        }
 	
@@ -9826,128 +9821,130 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        // TODO do something about data URLs
 	                        // TODO do something about blob URLs
 	
-	                        _context.next = 24;
+	                        _context.next = 22;
 	                        break;
 	
-	                    case 23:
+	                    case 21:
 	                        throw new Error("DeepAI error: Image element has no SRC: " + key);
 	
-	                    case 24:
-	                        _context.next = 35;
+	                    case 22:
+	                        _context.next = 33;
 	                        break;
 	
-	                    case 26:
+	                    case 24:
 	                        if (!(element.tagName === 'INPUT' && element.files !== undefined)) {
-	                            _context.next = 34;
+	                            _context.next = 32;
 	                            break;
 	                        }
 	
 	                        if (!(element.files.length > 0)) {
-	                            _context.next = 31;
+	                            _context.next = 29;
 	                            break;
 	                        }
 	
 	                        form.append(key, element.files[0], 'file.jpeg');
-	                        _context.next = 32;
+	                        _context.next = 30;
 	                        break;
 	
-	                    case 31:
+	                    case 29:
 	                        throw new Error("DeepAI error: File picker has no file picked: " + key);
 	
-	                    case 32:
-	                        _context.next = 35;
+	                    case 30:
+	                        _context.next = 33;
 	                        break;
 	
-	                    case 34:
+	                    case 32:
 	                        throw new Error("DeepAI error: DOM Element type for key: " + key);
 	
-	                    case 35:
-	                        _context.next = 46;
+	                    case 33:
+	                        _context.next = 44;
 	                        break;
 	
-	                    case 37:
+	                    case 35:
 	                        if (!inputs_object[key].hasOwnProperty('fd')) {
-	                            _context.next = 41;
+	                            _context.next = 39;
 	                            break;
 	                        }
 	
 	                        // Seems to be a nodejs stream.
 	                        form.append(key, inputs_object[key]); // form-data in nodejs can handle this
-	                        _context.next = 46;
+	                        _context.next = 44;
 	                        break;
 	
-	                    case 41:
+	                    case 39:
 	                        if (!(globalObject.Buffer && Buffer.isBuffer(inputs_object[key]))) {
-	                            _context.next = 45;
+	                            _context.next = 43;
 	                            break;
 	                        }
 	
 	                        form.append(key, inputs_object[key], 'file.jpeg'); // form-data in nodejs can handle this
-	                        _context.next = 46;
+	                        _context.next = 44;
 	                        break;
 	
-	                    case 45:
+	                    case 43:
 	                        throw new Error("DeepAI error: unknown input type for key: " + key);
 	
-	                    case 46:
+	                    case 44:
 	                        _iteratorNormalCompletion = true;
-	                        _context.next = 8;
+	                        _context.next = 6;
+	                        break;
+	
+	                    case 47:
+	                        _context.next = 53;
 	                        break;
 	
 	                    case 49:
-	                        _context.next = 55;
-	                        break;
-	
-	                    case 51:
-	                        _context.prev = 51;
-	                        _context.t0 = _context['catch'](6);
+	                        _context.prev = 49;
+	                        _context.t0 = _context['catch'](4);
 	                        _didIteratorError = true;
 	                        _iteratorError = _context.t0;
 	
-	                    case 55:
-	                        _context.prev = 55;
-	                        _context.prev = 56;
+	                    case 53:
+	                        _context.prev = 53;
+	                        _context.prev = 54;
 	
 	                        if (!_iteratorNormalCompletion && _iterator.return) {
 	                            _iterator.return();
 	                        }
 	
-	                    case 58:
-	                        _context.prev = 58;
+	                    case 56:
+	                        _context.prev = 56;
 	
 	                        if (!_didIteratorError) {
-	                            _context.next = 61;
+	                            _context.next = 59;
 	                            break;
 	                        }
 	
 	                        throw _iteratorError;
 	
+	                    case 59:
+	                        return _context.finish(56);
+	
+	                    case 60:
+	                        return _context.finish(53);
+	
 	                    case 61:
-	                        return _context.finish(58);
-	
-	                    case 62:
-	                        return _context.finish(55);
-	
-	                    case 63:
-	                        req_options = {};
+	                        req_options = {
+	                            withCredentials: true
+	                        };
 	
 	                        if (form.getHeaders !== undefined) {
 	                            // formData is the nodejs based subsitute, only needed for node.js
 	                            req_options.headers = form.getHeaders();
 	                        }
-	                        _context.next = 67;
+	                        _context.next = 65;
 	                        return axios.post(urlForModel(model_name), form, req_options);
 	
-	                    case 67:
+	                    case 65:
 	                        response = _context.sent;
 	                        return _context.abrupt('return', response.data);
 	
-	                    case 69:
+	                    case 67:
 	                    case 'end':
 	                        return _context.stop();
 	                }
 	            }
-	        }, _callee, this, [[6, 51, 55, 63], [56,, 58, 62]]);
+	        }, _callee, this, [[4, 49, 53, 61], [54,, 56, 60]]);
 	    }));
 	
 	    function request(_x, _x2) {
@@ -9956,6 +9953,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    return request;
 	}();
+	
+	DeepAI.prototype.renderResultIntoElement = resultRendering.renderResultIntoElement;
 	
 	module.exports = DeepAI;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(336).Buffer))
@@ -13569,6 +13568,452 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 367 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	module.exports = {
+	    baseUrl: "https://api.deepai.org"
+	    //baseUrl: "http://localhost:8000" // for dev
+	};
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var renderResultIntoElement = function () {
+	    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(result, element) {
+	        var resultPageData, scroller, pre, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, input, img_tag, resultscaler, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3;
+	
+	        return regeneratorRuntime.wrap(function _callee$(_context) {
+	            while (1) {
+	                switch (_context.prev = _context.next) {
+	                    case 0:
+	                        element.innerHTML = ''; // remove everything to start
+	
+	                        if (!result.err) {
+	                            _context.next = 4;
+	                            break;
+	                        }
+	
+	                        element.innerHTML = err;
+	                        return _context.abrupt('return', false);
+	
+	                    case 4:
+	                        if (!result.output) {
+	                            _context.next = 93;
+	                            break;
+	                        }
+	
+	                        // JSON or text output.
+	                        console.log('got json or text output');
+	
+	                        console.log('getting result page data');
+	                        _context.next = 9;
+	                        return fetch(apiBaseUrl + '/get_standard_api_result_data/' + result.id, {
+	                            credentials: 'include'
+	                        });
+	
+	                    case 9:
+	                        resultPageData = _context.sent;
+	                        _context.next = 12;
+	                        return resultPageData.json();
+	
+	                    case 12:
+	                        resultPageData = _context.sent;
+	
+	                        console.log('got result page data');
+	
+	                        if (!(typeof result.output === 'string')) {
+	                            _context.next = 45;
+	                            break;
+	                        }
+	
+	                        scroller = document.createElement("div");
+	
+	                        scroller.style.width = '100%';
+	                        scroller.style.height = '100%';
+	                        scroller.style.overflow = 'auto';
+	                        element.appendChild(scroller);
+	
+	                        pre = document.createElement("pre");
+	
+	                        pre.textContent = result.output;
+	                        scroller.appendChild(pre);
+	
+	                        // Append inputs
+	                        _iteratorNormalCompletion = true;
+	                        _didIteratorError = false;
+	                        _iteratorError = undefined;
+	                        _context.prev = 26;
+	                        for (_iterator = resultPageData.result_data.inputs[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                            input = _step.value;
+	
+	                            if (input.is_img) {
+	                                img_tag = document.createElement('img');
+	
+	                                img_tag.src = apiBaseUrl + input.url;
+	                                img_tag.style.position = 'relative';
+	                                img_tag.style.maxWidth = '100%';
+	                                img_tag.style.maxHeight = '100%';
+	                                scroller.appendChild(img_tag);
+	                            }
+	                        }
+	
+	                        _context.next = 34;
+	                        break;
+	
+	                    case 30:
+	                        _context.prev = 30;
+	                        _context.t0 = _context['catch'](26);
+	                        _didIteratorError = true;
+	                        _iteratorError = _context.t0;
+	
+	                    case 34:
+	                        _context.prev = 34;
+	                        _context.prev = 35;
+	
+	                        if (!_iteratorNormalCompletion && _iterator.return) {
+	                            _iterator.return();
+	                        }
+	
+	                    case 37:
+	                        _context.prev = 37;
+	
+	                        if (!_didIteratorError) {
+	                            _context.next = 40;
+	                            break;
+	                        }
+	
+	                        throw _iteratorError;
+	
+	                    case 40:
+	                        return _context.finish(37);
+	
+	                    case 41:
+	                        return _context.finish(34);
+	
+	                    case 42:
+	                        return _context.abrupt('return', true);
+	
+	                    case 45:
+	                        if (!(_typeof(result.output) === 'object')) {
+	                            _context.next = 89;
+	                            break;
+	                        }
+	
+	                        if (!(resultPageData.result_data.inputs.length == 1 && resultPageData.result_data.inputs[0].is_img && resultPageData.result_data.visualizer_data)) {
+	                            _context.next = 58;
+	                            break;
+	                        }
+	
+	                        // single image input and we know how to visualize it.
+	                        console.log('have visualizer for result JSON');
+	                        resultscaler = document.createElement('iframe');
+	
+	                        // Set up a handler for when the frame loads - we need to handle this event
+	
+	                        resultscaler.onload = function () {
+	                            // Firefox doesnt allow inner iframe manip until the iframe is loaded...
+	
+	
+	                            var innerDoc = resultscaler.contentDocument.body;
+	                            innerDoc.style.margin = '0px';
+	                            innerDoc.style.overflow = 'hidden';
+	                            var bbox_container = document.createElement('boundingboxcontainer');
+	                            bbox_container.style.position = 'relative'; // the absolute positions are relative to this element
+	                            innerDoc.appendChild(bbox_container);
+	
+	                            var img_tag = document.createElement('img');
+	                            img_tag.src = apiBaseUrl + resultPageData.result_data.inputs[0].url;
+	                            img_tag.style.position = 'absolute';
+	                            bbox_container.appendChild(img_tag);
+	
+	                            var iframe_reflow = function iframe_reflow() {
+	                                console.log('iframe resize');
+	
+	                                resultscaler.contentDocument.body.style.transform = null;
+	                                var bodyWidth = resultscaler.contentDocument.body.scrollWidth;
+	                                var bodyHeight = resultscaler.contentDocument.body.scrollHeight;
+	
+	                                var containerWidth = resultscaler.offsetWidth;
+	                                var containerHeight = resultscaler.offsetHeight;
+	
+	                                var wScale = containerWidth / bodyWidth;
+	                                var hScale = containerHeight / bodyHeight;
+	
+	                                var minScale = Math.min(wScale, hScale);
+	
+	                                resultscaler.contentDocument.body.style.transformOrigin = 'top left';
+	                                resultscaler.contentDocument.body.style.transform = 'scale(' + minScale + ')';
+	
+	                                bbox_container.style.setProperty('--fontscale', 100 / minScale + "%");
+	                            };
+	
+	                            resultscaler.contentWindow.onresize = iframe_reflow;
+	
+	                            img_tag.onload = iframe_reflow;
+	
+	                            var processed_annotations = process_annotations(result.output, resultPageData.result_data.visualizer_data);
+	                            console.log('processed annotations', processed_annotations);
+	                            var i = 0;
+	                            var _iteratorNormalCompletion2 = true;
+	                            var _didIteratorError2 = false;
+	                            var _iteratorError2 = undefined;
+	
+	                            try {
+	                                for (var _iterator2 = processed_annotations[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                                    var annotation = _step2.value;
+	
+	                                    var bbox = document.createElement('boundingbox');
+	                                    bbox.style.position = 'absolute';
+	
+	                                    bbox.style.left = annotation.bounding_box[0] + 'px';
+	                                    bbox.style.top = annotation.bounding_box[1] + 'px';
+	                                    bbox.style.width = annotation.bounding_box[2] + 'px';
+	                                    bbox.style.height = annotation.bounding_box[3] + 'px';
+	                                    var color = WAD_COLORS[i++ % WAD_COLORS.length];
+	                                    bbox.style.border = '2px solid ' + color;
+	                                    bbox_container.appendChild(bbox);
+	
+	                                    var bbox_label = document.createElement('boundingboxlabel');
+	                                    bbox_label.textContent = annotation.caption;
+	                                    bbox_label.style.color = 'white';
+	                                    bbox_label.style.fontFamily = 'arial';
+	                                    bbox_label.style.backgroundColor = color;
+	                                    bbox_label.style.fontSize = 'var(--fontscale)';
+	                                    bbox.appendChild(bbox_label);
+	                                }
+	                            } catch (err) {
+	                                _didIteratorError2 = true;
+	                                _iteratorError2 = err;
+	                            } finally {
+	                                try {
+	                                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                                        _iterator2.return();
+	                                    }
+	                                } finally {
+	                                    if (_didIteratorError2) {
+	                                        throw _iteratorError2;
+	                                    }
+	                                }
+	                            }
+	                        };
+	
+	                        // Set the src which will end up triggering the onload event in all browsers.
+	                        resultscaler.src = 'about:blank';
+	                        resultscaler.style.border = 'none';
+	                        resultscaler.style.width = '100%';
+	                        resultscaler.style.height = '100%';
+	                        element.appendChild(resultscaler);
+	                        return _context.abrupt('return', true);
+	
+	                    case 58:
+	                        // not single image - perhaps multi image or text input.
+	                        // or no visualizer
+	                        console.log('no visualizer for result JSON');
+	                        scroller = document.createElement("div");
+	
+	                        scroller.style.width = '100%';
+	                        scroller.style.height = '100%';
+	                        scroller.style.overflow = 'auto';
+	                        element.appendChild(scroller);
+	
+	                        pre = document.createElement("pre");
+	
+	                        pre.textContent = JSON.stringify(result.output, null, 4);
+	                        scroller.appendChild(pre);
+	
+	                        // Append inputs
+	                        _iteratorNormalCompletion3 = true;
+	                        _didIteratorError3 = false;
+	                        _iteratorError3 = undefined;
+	                        _context.prev = 70;
+	                        for (_iterator3 = resultPageData.result_data.inputs[Symbol.iterator](); !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                            input = _step3.value;
+	
+	                            if (input.is_img) {
+	                                img_tag = document.createElement('img');
+	
+	                                img_tag.src = apiBaseUrl + input.url;
+	                                img_tag.style.position = 'relative';
+	                                img_tag.style.maxWidth = '100%';
+	                                img_tag.style.maxHeight = '100%';
+	                                scroller.appendChild(img_tag);
+	                            }
+	                        }
+	
+	                        _context.next = 78;
+	                        break;
+	
+	                    case 74:
+	                        _context.prev = 74;
+	                        _context.t1 = _context['catch'](70);
+	                        _didIteratorError3 = true;
+	                        _iteratorError3 = _context.t1;
+	
+	                    case 78:
+	                        _context.prev = 78;
+	                        _context.prev = 79;
+	
+	                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                            _iterator3.return();
+	                        }
+	
+	                    case 81:
+	                        _context.prev = 81;
+	
+	                        if (!_didIteratorError3) {
+	                            _context.next = 84;
+	                            break;
+	                        }
+	
+	                        throw _iteratorError3;
+	
+	                    case 84:
+	                        return _context.finish(81);
+	
+	                    case 85:
+	                        return _context.finish(78);
+	
+	                    case 86:
+	                        return _context.abrupt('return', true);
+	
+	                    case 87:
+	                        _context.next = 91;
+	                        break;
+	
+	                    case 89:
+	                        element.innerHTML = "Model returned an unknown data type.";
+	                        return _context.abrupt('return', false);
+	
+	                    case 91:
+	                        _context.next = 106;
+	                        break;
+	
+	                    case 93:
+	                        if (!result.output_url) {
+	                            _context.next = 104;
+	                            break;
+	                        }
+	
+	                        // Image output.
+	                        console.log('got image output');
+	
+	                        // Just show the image.
+	                        img_tag = document.createElement('img');
+	
+	                        img_tag.src = result.output_url;
+	                        img_tag.style.position = 'relative';
+	                        img_tag.style.maxWidth = '100%';
+	                        img_tag.style.maxHeight = '100%';
+	                        element.appendChild(img_tag);
+	                        return _context.abrupt('return', true);
+	
+	                    case 104:
+	                        element.innerHTML = "Model did not return an output or an error.";
+	                        return _context.abrupt('return', false);
+	
+	                    case 106:
+	                    case 'end':
+	                        return _context.stop();
+	                }
+	            }
+	        }, _callee, this, [[26, 30, 34, 42], [35,, 37, 41], [70, 74, 78, 86], [79,, 81, 85]]);
+	    }));
+	
+	    return function renderResultIntoElement(_x, _x2) {
+	        return _ref.apply(this, arguments);
+	    };
+	}();
+	
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+	
+	var apiBaseUrl = __webpack_require__(367).baseUrl;
+	
+	var WAD_COLORS = ["rgb(173, 35, 35)", // Red
+	"rgb(42, 75, 215)", // Blue
+	"rgb(87, 87, 87)", // Dark Gray
+	"rgb(29, 105, 20)", // Green
+	"rgb(129, 74, 25)", // Brown
+	"rgb(129, 38, 192)", // Purple
+	"rgb(160, 160, 160)", // Lt Gray
+	"rgb(129, 197, 122)", // Lt green
+	"rgb(157, 175, 255)", // Lt blue
+	"rgb(41, 208, 208)", // Cyan
+	"rgb(255, 146, 51)", // Orange
+	"rgb(199, 183, 0)", // Yellow
+	"rgb(233, 222, 187)", // Tan
+	"rgb(255, 205, 243)"];
+	
+	function capitalizeFirstLetter(string) {
+	    return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+	
+	function toTitleCase(str) {
+	    return str.replace(/\w\S*/g, function (txt) {
+	        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+	    });
+	}
+	
+	function process_annotations(input_struct, visualizer_data) {
+	    input_struct = JSON.parse(JSON.stringify(input_struct)); // cheap deep clone
+	    var detections = input_struct[visualizer_data.list_key];
+	    detections.sort(function (a, b) {
+	        return b.confidence - a.confidence;
+	    });
+	
+	    var count = Math.min(15, detections.length);
+	
+	    var processed_annotations = [];
+	    for (var i = 0; i < count; i++) {
+	        var detection = detections[i];
+	        var caption;
+	        if (visualizer_data.label_key == 'demographic') {
+	            if (detection[visualizer_data.label_key]) {
+	                caption = detection[visualizer_data.label_key]; // backwards compatible demog format
+	            } else {
+	                //"White Male, 30-40"
+	                caption = detection['cultural_appearance'] + ' ' + detection['gender'] + ', ' + detection['age_range'][0] + '-' + detection['age_range'][1];
+	            }
+	        } else if (visualizer_data.label_key == 'people') {
+	            //produces "Sad, White Male, 30-40, Ted Cruz"
+	            var parts = [];
+	            if (detection['facial-expression-recognition'] && detection['facial-expression-recognition']['emotion'] != null) {
+	                parts.push(capitalizeFirstLetter(detection['facial-expression-recognition']['emotion']));
+	            }
+	            if (detection['demographic-recognition'] && detection['demographic-recognition']['cultural_appearance'] != null) {
+	                parts.push(detection['demographic-recognition']['cultural_appearance'] + ' ' + detection['demographic-recognition']['gender'] + ', ' + detection['demographic-recognition']['age_range'][0] + '-' + detection['demographic-recognition']['age_range'][1]);
+	            }
+	            if (detection['celebrity-recognition'] && detection['celebrity-recognition']['name'] != null && detection['celebrity-recognition']['name'] != 'unknown') {
+	                parts.push(toTitleCase(detection['celebrity-recognition']['name']));
+	            }
+	            if (parts.length > 0) {
+	                caption = parts.join(', ');
+	            } else {
+	                caption = "Face";
+	            }
+	        } else {
+	            caption = detection[visualizer_data.label_key]; // non demographic mode
+	        }
+	        processed_annotations.push({
+	            bounding_box: detection.bounding_box,
+	            caption: caption
+	        });
+	    }
+	    return processed_annotations;
+	}
+	
+	module.exports = {
+	    renderResultIntoElement: renderResultIntoElement
+	};
+
+/***/ }),
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

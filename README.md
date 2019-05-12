@@ -59,6 +59,24 @@ var result = await deepai.callStandardApi("content-moderation", {
     image: document.getElementById('yourFilePickerId')
 });
 ```
+
+
+##### Browser Result Rendering
+
+This code will render the result of the API call into an existing HTML element, such as a div, with the id "yourResultContainerId".
+
+The result will fit itself inside your container, so be sure to set a size on it.
+
+
+```js
+var result = await deepai.callStandardApi("content-moderation", {
+    image: "https://YOUR_IMAGE_URL"
+});
+
+await deepai.renderResultIntoElement(result, document.getElementById('yourResultContainerId'));
+
+```
+
 #### Node.js
 
 ```js
