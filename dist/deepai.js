@@ -13759,7 +13759,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                            img_tag.onload = iframe_reflow;
 	
-	                            var processed_annotations = process_annotations(result.output, resultPageData.result_data.visualizer_data);
+	                            var processed_annotations = process_annotations(result.output, resultPageData.result_data.visualizer_data, resultPageData.result_data.scale_applied);
 	                            console.log('processed annotations', processed_annotations);
 	                            var i = 0;
 	                            var _iteratorNormalCompletion2 = true;
@@ -13961,7 +13961,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	}
 	
-	function process_annotations(input_struct, visualizer_data) {
+	function process_annotations(input_struct, visualizer_data, scale_applied) {
 	    input_struct = JSON.parse(JSON.stringify(input_struct)); // cheap deep clone
 	    var detections = input_struct[visualizer_data.list_key];
 	    detections.sort(function (a, b) {
@@ -14001,6 +14001,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	            caption = detection[visualizer_data.label_key]; // non demographic mode
 	        }
+	
+	        detection.bounding_box[0] *= scale_applied;
+	        detection.bounding_box[1] *= scale_applied;
+	        detection.bounding_box[2] *= scale_applied;
+	        detection.bounding_box[3] *= scale_applied;
+	
 	        processed_annotations.push({
 	            bounding_box: detection.bounding_box,
 	            caption: caption
