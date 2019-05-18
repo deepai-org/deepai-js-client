@@ -13741,18 +13741,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                var bodyWidth = resultscaler.contentDocument.body.scrollWidth;
 	                                var bodyHeight = resultscaler.contentDocument.body.scrollHeight;
 	
+	                                var imgWidth = img_tag.offsetWidth;
+	                                var imgHeight = img_tag.offsetHeight;
+	
 	                                var containerWidth = resultscaler.offsetWidth;
 	                                var containerHeight = resultscaler.offsetHeight;
 	
-	                                var wScale = containerWidth / bodyWidth;
-	                                var hScale = containerHeight / bodyHeight;
+	                                var wExcess = 0;
+	                                var hExcess = 0;
 	
-	                                var minScale = Math.min(wScale, hScale);
+	                                if (imgWidth < bodyWidth && imgHeight < bodyHeight) {
+	                                    var wScale = containerWidth / imgWidth;
+	                                    var hScale = containerHeight / imgHeight;
+	                                    var minScale = Math.min(wScale, hScale);
+	                                    wExcess = containerWidth - imgWidth * minScale;
+	                                    hExcess = containerHeight - imgHeight * minScale;
+	                                } else {
+	                                    var wScale = containerWidth / bodyWidth;
+	                                    var hScale = containerHeight / bodyHeight;
+	                                    var minScale = Math.min(wScale, hScale);
+	                                    wExcess = containerWidth - bodyWidth * minScale;
+	                                    hExcess = containerHeight - bodyHeight * minScale;
+	                                }
+	
+	                                wExcess = wExcess / minScale;
+	                                hExcess = hExcess / minScale;
 	
 	                                resultscaler.contentDocument.body.style.transformOrigin = 'top left';
 	                                resultscaler.contentDocument.body.style.transform = 'scale(' + minScale + ')';
 	
 	                                bbox_container.style.setProperty('--fontscale', 100 / minScale + "%");
+	                                bbox_container.style.left = wExcess / 2 + "px";
+	                                bbox_container.style.top = hExcess / 2 + "px";
 	                            };
 	
 	                            resultscaler.contentWindow.onresize = iframe_reflow;
