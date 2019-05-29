@@ -13605,7 +13605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                    case 4:
 	                        if (!result.output) {
-	                            _context.next = 94;
+	                            _context.next = 102;
 	                            break;
 	                        }
 	
@@ -13629,7 +13629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        console.log('got result page data');
 	
 	                        if (!(typeof result.output === 'string')) {
-	                            _context.next = 46;
+	                            _context.next = 50;
 	                            break;
 	                        }
 	
@@ -13638,19 +13638,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        scroller.style.width = '100%';
 	                        scroller.style.height = '100%';
 	                        scroller.style.overflow = 'auto';
+	                        scroller.style.display = 'flex';
+	                        scroller.style.alignItems = 'center';
+	                        scroller.style.flexDirection = 'column';
 	                        element.appendChild(scroller);
 	
 	                        pre = document.createElement("pre");
 	
 	                        pre.textContent = result.output;
 	                        pre.style.whiteSpace = "pre-wrap";
+	                        pre.style.margin = '0px';
+	
 	                        scroller.appendChild(pre);
 	
 	                        // Append inputs
 	                        _iteratorNormalCompletion = true;
 	                        _didIteratorError = false;
 	                        _iteratorError = undefined;
-	                        _context.prev = 27;
+	                        _context.prev = 31;
 	                        for (_iterator = resultPageData.result_data.inputs[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                            input = _step.value;
 	
@@ -13659,56 +13664,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                                img_tag.src = apiBaseUrl + input.url;
 	                                img_tag.style.position = 'relative';
-	                                img_tag.style.maxWidth = '100%';
-	                                img_tag.style.maxHeight = '100%';
+	                                img_tag.style.width = '100%';
+	                                img_tag.style.height = '100%%';
+	                                img_tag.style.objectFit = 'contain';
 	                                scroller.appendChild(img_tag);
 	                            }
 	                        }
 	
-	                        _context.next = 35;
+	                        _context.next = 39;
 	                        break;
-	
-	                    case 31:
-	                        _context.prev = 31;
-	                        _context.t0 = _context['catch'](27);
-	                        _didIteratorError = true;
-	                        _iteratorError = _context.t0;
 	
 	                    case 35:
 	                        _context.prev = 35;
-	                        _context.prev = 36;
+	                        _context.t0 = _context['catch'](31);
+	                        _didIteratorError = true;
+	                        _iteratorError = _context.t0;
+	
+	                    case 39:
+	                        _context.prev = 39;
+	                        _context.prev = 40;
 	
 	                        if (!_iteratorNormalCompletion && _iterator.return) {
 	                            _iterator.return();
 	                        }
 	
-	                    case 38:
-	                        _context.prev = 38;
+	                    case 42:
+	                        _context.prev = 42;
 	
 	                        if (!_didIteratorError) {
-	                            _context.next = 41;
+	                            _context.next = 45;
 	                            break;
 	                        }
 	
 	                        throw _iteratorError;
 	
-	                    case 41:
-	                        return _context.finish(38);
-	
-	                    case 42:
-	                        return _context.finish(35);
-	
-	                    case 43:
-	                        return _context.abrupt('return', true);
+	                    case 45:
+	                        return _context.finish(42);
 	
 	                    case 46:
+	                        return _context.finish(39);
+	
+	                    case 47:
+	                        return _context.abrupt('return', true);
+	
+	                    case 50:
 	                        if (!(_typeof(result.output) === 'object')) {
-	                            _context.next = 90;
+	                            _context.next = 98;
 	                            break;
 	                        }
 	
 	                        if (!(resultPageData.result_data.inputs.length == 1 && resultPageData.result_data.inputs[0].is_img && resultPageData.result_data.visualizer_data)) {
-	                            _context.next = 59;
+	                            _context.next = 63;
 	                            break;
 	                        }
 	
@@ -13836,7 +13842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        element.appendChild(resultscaler);
 	                        return _context.abrupt('return', true);
 	
-	                    case 59:
+	                    case 63:
 	                        // not single image - perhaps multi image or text input.
 	                        // or no visualizer
 	                        console.log('no visualizer for result JSON');
@@ -13845,10 +13851,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        scroller.style.width = '100%';
 	                        scroller.style.height = '100%';
 	                        scroller.style.overflow = 'auto';
+	                        scroller.style.display = 'flex';
+	                        scroller.style.alignItems = 'center';
+	                        scroller.style.flexDirection = 'column';
+	
 	                        element.appendChild(scroller);
 	
 	                        pre = document.createElement("pre");
 	
+	                        pre.style.margin = '0px';
 	                        pre.textContent = JSON.stringify(result.output, null, 4);
 	                        scroller.appendChild(pre);
 	
@@ -13856,7 +13867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _iteratorNormalCompletion3 = true;
 	                        _didIteratorError3 = false;
 	                        _iteratorError3 = undefined;
-	                        _context.prev = 71;
+	                        _context.prev = 79;
 	                        for (_iterator3 = resultPageData.result_data.inputs[Symbol.iterator](); !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
 	                            input = _step3.value;
 	
@@ -13864,64 +13875,64 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                img_tag = document.createElement('img');
 	
 	                                img_tag.src = apiBaseUrl + input.url;
-	                                img_tag.style.position = 'relative';
-	                                img_tag.style.maxWidth = '100%';
-	                                img_tag.style.maxHeight = '100%';
+	                                img_tag.style.width = '100%';
+	                                img_tag.style.height = '79%';
+	                                img_tag.style.objectFit = 'contain';
 	                                scroller.appendChild(img_tag);
 	                            }
 	                        }
 	
-	                        _context.next = 79;
+	                        _context.next = 87;
 	                        break;
 	
-	                    case 75:
-	                        _context.prev = 75;
-	                        _context.t1 = _context['catch'](71);
+	                    case 83:
+	                        _context.prev = 83;
+	                        _context.t1 = _context['catch'](79);
 	                        _didIteratorError3 = true;
 	                        _iteratorError3 = _context.t1;
 	
-	                    case 79:
-	                        _context.prev = 79;
-	                        _context.prev = 80;
+	                    case 87:
+	                        _context.prev = 87;
+	                        _context.prev = 88;
 	
 	                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
 	                            _iterator3.return();
 	                        }
 	
-	                    case 82:
-	                        _context.prev = 82;
+	                    case 90:
+	                        _context.prev = 90;
 	
 	                        if (!_didIteratorError3) {
-	                            _context.next = 85;
+	                            _context.next = 93;
 	                            break;
 	                        }
 	
 	                        throw _iteratorError3;
 	
-	                    case 85:
-	                        return _context.finish(82);
+	                    case 93:
+	                        return _context.finish(90);
 	
-	                    case 86:
-	                        return _context.finish(79);
+	                    case 94:
+	                        return _context.finish(87);
 	
-	                    case 87:
+	                    case 95:
 	                        return _context.abrupt('return', true);
 	
-	                    case 88:
-	                        _context.next = 92;
+	                    case 96:
+	                        _context.next = 100;
 	                        break;
 	
-	                    case 90:
+	                    case 98:
 	                        element.innerHTML = "Model returned an unknown data type.";
 	                        return _context.abrupt('return', false);
 	
-	                    case 92:
-	                        _context.next = 107;
+	                    case 100:
+	                        _context.next = 116;
 	                        break;
 	
-	                    case 94:
+	                    case 102:
 	                        if (!result.output_url) {
-	                            _context.next = 105;
+	                            _context.next = 114;
 	                            break;
 	                        }
 	
@@ -13933,21 +13944,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                        img_tag.src = result.output_url;
 	                        img_tag.style.position = 'relative';
-	                        img_tag.style.maxWidth = '100%';
-	                        img_tag.style.maxHeight = '100%';
+	                        img_tag.style.width = '100%';
+	                        img_tag.style.height = '100%';
+	                        img_tag.style.objectFit = 'contain';
 	                        element.appendChild(img_tag);
 	                        return _context.abrupt('return', true);
 	
-	                    case 105:
+	                    case 114:
 	                        element.innerHTML = "Model did not return an output or an error.";
 	                        return _context.abrupt('return', false);
 	
-	                    case 107:
+	                    case 116:
 	                    case 'end':
 	                        return _context.stop();
 	                }
 	            }
-	        }, _callee, this, [[27, 31, 35, 43], [36,, 38, 42], [71, 75, 79, 87], [80,, 82, 86]]);
+	        }, _callee, this, [[31, 35, 39, 47], [40,, 42, 46], [79, 83, 87, 95], [88,, 90, 94]]);
 	    }));
 	
 	    return function renderResultIntoElement(_x, _x2) {
