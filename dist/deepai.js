@@ -13727,6 +13727,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            innerDoc.style.overflow = 'hidden';
 	                            var bbox_container = document.createElement('boundingboxcontainer');
 	                            bbox_container.style.position = 'relative'; // the absolute positions are relative to this element
+	                            bbox_container.style.opacity = '0.001'; // the result are hidden until the iframe reflows - which is first when the img loads
+	
 	                            innerDoc.appendChild(bbox_container);
 	
 	                            var img_tag = document.createElement('img');
@@ -13773,6 +13775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                bbox_container.style.setProperty('--fontscale', 100 / minScale + "%");
 	                                bbox_container.style.left = wExcess / 2 + "px";
 	                                bbox_container.style.top = hExcess / 2 + "px";
+	                                bbox_container.style.opacity = '1';
 	                            };
 	
 	                            resultscaler.contentWindow.onresize = iframe_reflow;
