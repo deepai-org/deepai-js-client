@@ -77,6 +77,34 @@ await deepai.renderResultIntoElement(result, document.getElementById('yourResult
 
 ```
 
+
+##### Rendering a result without an extra network request:
+
+The function renderAnnotatedResultIntoElement is for advanced users only.
+
+```js
+var resultAnnotated = {
+    output_url: <Pass URL of the model output>
+    output: <Pass the model output directly in case of JSON or text output>
+    id: "fa616aa1-c762-4c98-b44e-75781627974a" <pass your job ID>
+    inputs:[
+        {
+            is_img: true,
+            url: (relative or absolute img url, annotations will be rendered on top of this result url.)
+        }
+    ],
+    visualizer_data: {
+        list_key: 'Objects', (Name of the list property containing annotations)
+        label_key: 'Object' (Name of the value property to label annotations with)
+    }, 
+    scale_applied: 1.333 (Scale to multiply all detection x y coordinates by before rendering)
+};
+
+deepai.renderAnnotatedResultIntoElement(resultAnnotated, document.getElementById('yourResultContainerId'));
+
+```
+
+
 #### Node.js
 
 ```js
