@@ -13150,6 +13150,77 @@ function prependApiBaseIfNeeded(url) {
     return apiBaseUrl + url; // turn relative into absolute
   }
 }
+
+function polygonToSvgPath(polygon, left, top) {
+  // M 10,10 L 100,10 100,100 z    M 30,20 L 70,20 70,60 z
+  var path_strings = [];
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = polygon[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var part = _step.value;
+
+      if (part.length < 2) {
+        continue;
+      }
+
+      path_strings.push('M');
+      var first = true;
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = part[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var point = _step2.value;
+          path_strings.push(point[0] - left + "," + (point[1] - top));
+
+          if (isNaN(point[0]) || isNaN(point[1])) {
+            console.log('not showing invalid polygon, found NaN');
+            return "";
+          }
+
+          if (first) {
+            path_strings.push('L');
+            first = false;
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      path_strings.push('z');
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+        _iterator["return"]();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  return path_strings.join(" ");
+}
 /*
 
 Data structures basic info...
@@ -13319,13 +13390,13 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
       pre.style.margin = '0px';
       scroller.appendChild(pre); // Append inputs
 
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
 
       try {
-        for (var _iterator = annotatedResult.inputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var input = _step.value;
+        for (var _iterator3 = annotatedResult.inputs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var input = _step3.value;
 
           if (input.is_img) {
             var img_tag = document.createElement('img');
@@ -13338,16 +13409,16 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
           }
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
+          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+            _iterator3["return"]();
           }
         } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
+          if (_didIteratorError3) {
+            throw _iteratorError3;
           }
         }
       }
@@ -13417,21 +13488,120 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
           var processed_annotations = process_annotations(annotatedResult.output, annotatedResult.visualizer_data, annotatedResult.scale_applied);
           console.log('processed annotations', processed_annotations);
           var i = 0;
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
+          var _iteratorNormalCompletion4 = true;
+          var _didIteratorError4 = false;
+          var _iteratorError4 = undefined;
 
           try {
-            for (var _iterator2 = processed_annotations[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var annotation = _step2.value;
+            for (var _iterator4 = processed_annotations[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+              var annotation = _step4.value;
               var bbox = document.createElement('boundingbox');
               bbox.style.position = 'absolute';
-              bbox.style.left = annotation.bounding_box[0] + 'px';
-              bbox.style.top = annotation.bounding_box[1] + 'px';
-              bbox.style.width = annotation.bounding_box[2] + 'px';
-              bbox.style.height = annotation.bounding_box[3] + 'px';
+              var left;
+              var top;
+              var width;
+              var height;
               var color = WAD_COLORS[i++ % WAD_COLORS.length];
-              bbox.style.border = '2px solid ' + color;
+
+              if (annotation.mask_vertices) {
+                var minx = null;
+                var miny = null;
+                var maxx = null;
+                var maxy = null;
+                var _iteratorNormalCompletion5 = true;
+                var _didIteratorError5 = false;
+                var _iteratorError5 = undefined;
+
+                try {
+                  for (var _iterator5 = annotation.mask_vertices[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                    var part = _step5.value;
+                    var _iteratorNormalCompletion6 = true;
+                    var _didIteratorError6 = false;
+                    var _iteratorError6 = undefined;
+
+                    try {
+                      for (var _iterator6 = part[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                        var point = _step6.value;
+                        var x = point[0];
+                        var y = point[1];
+
+                        if (minx === null || x < minx) {
+                          minx = x;
+                        }
+
+                        if (miny === null || y < miny) {
+                          miny = y;
+                        }
+
+                        if (maxx === null || x > maxx) {
+                          maxx = x;
+                        }
+
+                        if (maxy === null || y > maxy) {
+                          maxy = y;
+                        }
+                      }
+                    } catch (err) {
+                      _didIteratorError6 = true;
+                      _iteratorError6 = err;
+                    } finally {
+                      try {
+                        if (!_iteratorNormalCompletion6 && _iterator6["return"] != null) {
+                          _iterator6["return"]();
+                        }
+                      } finally {
+                        if (_didIteratorError6) {
+                          throw _iteratorError6;
+                        }
+                      }
+                    }
+                  }
+                } catch (err) {
+                  _didIteratorError5 = true;
+                  _iteratorError5 = err;
+                } finally {
+                  try {
+                    if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
+                      _iterator5["return"]();
+                    }
+                  } finally {
+                    if (_didIteratorError5) {
+                      throw _iteratorError5;
+                    }
+                  }
+                }
+
+                width = maxx - minx;
+                height = maxy - miny;
+                left = minx;
+                top = miny;
+                var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.style.position = 'absolute';
+                svg.style.overflow = 'visible';
+                svg.style.width = width + 'px';
+                svg.style.height = height + 'px';
+                var path = document.createElementNS('http://www.w3.org/2000/svg', "path");
+                path.setAttributeNS(null, "d", polygonToSvgPath(annotation.mask_vertices, left, top));
+                path.style.fill = 'none';
+                path.style.stroke = color;
+                path.style.strokeWidth = 'calc(var(--fontscale) / 75)';
+                svg.appendChild(path);
+                bbox.appendChild(svg);
+                bbox.style.border = 'none';
+              } else if (annotation.bounding_box) {
+                left = annotation.bounding_box[0];
+                top = annotation.bounding_box[1];
+                width = annotation.bounding_box[2];
+                height = annotation.bounding_box[3];
+                bbox.style.border = '2px solid ' + color;
+              } else {
+                throw new Exception('Neither mask_vertices or bounding_box is passed, unknown annotation format');
+              }
+
+              bbox.style.left = left + 'px';
+              bbox.style.top = top + 'px';
+              bbox.style.width = width + 'px';
+              bbox.style.height = height + 'px';
               bbox_container.appendChild(bbox);
               var bbox_label = document.createElement('boundingboxlabel');
               bbox_label.textContent = annotation.caption;
@@ -13439,19 +13609,20 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
               bbox_label.style.fontFamily = 'arial';
               bbox_label.style.backgroundColor = color;
               bbox_label.style.fontSize = 'var(--fontscale)';
+              bbox_label.style.position = 'absolute';
               bbox.appendChild(bbox_label);
             }
           } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
+            _didIteratorError4 = true;
+            _iteratorError4 = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-                _iterator2["return"]();
+              if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+                _iterator4["return"]();
               }
             } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
+              if (_didIteratorError4) {
+                throw _iteratorError4;
               }
             }
           }
@@ -13481,13 +13652,13 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
         pre.textContent = JSON.stringify(annotatedResult.output, null, 4);
         scroller.appendChild(pre); // Append inputs
 
-        var _iteratorNormalCompletion3 = true;
-        var _didIteratorError3 = false;
-        var _iteratorError3 = undefined;
+        var _iteratorNormalCompletion7 = true;
+        var _didIteratorError7 = false;
+        var _iteratorError7 = undefined;
 
         try {
-          for (var _iterator3 = annotatedResult.inputs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var input = _step3.value;
+          for (var _iterator7 = annotatedResult.inputs[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+            var input = _step7.value;
 
             if (input.is_img) {
               var img_tag = document.createElement('img');
@@ -13499,16 +13670,16 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
             }
           }
         } catch (err) {
-          _didIteratorError3 = true;
-          _iteratorError3 = err;
+          _didIteratorError7 = true;
+          _iteratorError7 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-              _iterator3["return"]();
+            if (!_iteratorNormalCompletion7 && _iterator7["return"] != null) {
+              _iterator7["return"]();
             }
           } finally {
-            if (_didIteratorError3) {
-              throw _iteratorError3;
+            if (_didIteratorError7) {
+              throw _iteratorError7;
             }
           }
         }
@@ -13591,14 +13762,79 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
       }
     } else {
       caption = detection[visualizer_data.label_key]; // non demographic mode
+
+      if (caption && caption.constructor === String) {//It's a string
+      } else {
+        // some other type of object
+        var keys = Object.keys(caption);
+
+        if (keys.length == 1) {
+          caption = caption[keys[0]]; // get the only property
+        } else {
+          caption = JSON.stringify(caption);
+        }
+      }
     }
 
-    detection.bounding_box[0] *= scale_applied;
-    detection.bounding_box[1] *= scale_applied;
-    detection.bounding_box[2] *= scale_applied;
-    detection.bounding_box[3] *= scale_applied;
+    if (detection.bounding_box) {
+      detection.bounding_box[0] *= scale_applied;
+      detection.bounding_box[1] *= scale_applied;
+      detection.bounding_box[2] *= scale_applied;
+      detection.bounding_box[3] *= scale_applied;
+    }
+
+    if (detection.mask_vertices) {
+      var _iteratorNormalCompletion8 = true;
+      var _didIteratorError8 = false;
+      var _iteratorError8 = undefined;
+
+      try {
+        for (var _iterator8 = detection.mask_vertices[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+          var part = _step8.value;
+          var _iteratorNormalCompletion9 = true;
+          var _didIteratorError9 = false;
+          var _iteratorError9 = undefined;
+
+          try {
+            for (var _iterator9 = part[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+              var point = _step9.value;
+              point[0] *= scale_applied;
+              point[1] *= scale_applied;
+            }
+          } catch (err) {
+            _didIteratorError9 = true;
+            _iteratorError9 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion9 && _iterator9["return"] != null) {
+                _iterator9["return"]();
+              }
+            } finally {
+              if (_didIteratorError9) {
+                throw _iteratorError9;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        _didIteratorError8 = true;
+        _iteratorError8 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion8 && _iterator8["return"] != null) {
+            _iterator8["return"]();
+          }
+        } finally {
+          if (_didIteratorError8) {
+            throw _iteratorError8;
+          }
+        }
+      }
+    }
+
     processed_annotations.push({
       bounding_box: detection.bounding_box,
+      mask_vertices: detection.mask_vertices,
       caption: caption
     });
   }
