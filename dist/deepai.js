@@ -13436,6 +13436,24 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
           var innerDoc = resultscaler.contentDocument.body;
           innerDoc.style.margin = '0px';
           innerDoc.style.overflow = 'hidden';
+          /*
+          
+                              var css = `
+                                  boundingbox:hover{
+                                      background-color: #00ff00
+                                  }
+                              `;
+                              var style = document.createElement('style');
+          
+                              if (style.styleSheet) {
+                                  style.styleSheet.cssText = css;
+                              } else {
+                                  style.appendChild(document.createTextNode(css));
+                              }
+          
+                              resultscaler.contentDocument.head.appendChild(style);
+          */
+
           var bbox_container = document.createElement('boundingboxcontainer');
           bbox_container.style.position = 'relative'; // the absolute positions are relative to this element
 
@@ -13477,6 +13495,7 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
             hExcess = hExcess / minScale;
             resultscaler.contentDocument.body.style.transformOrigin = 'top left';
             resultscaler.contentDocument.body.style.transform = 'scale(' + minScale + ')';
+            bbox_container.style.setProperty('--scaleapplied', minScale);
             bbox_container.style.setProperty('--fontscale', 100 / minScale + "%");
             bbox_container.style.left = wExcess / 2 + "px";
             bbox_container.style.top = hExcess / 2 + "px";
@@ -13584,7 +13603,8 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
                 path.setAttributeNS(null, "d", polygonToSvgPath(annotation.mask_vertices, left, top));
                 path.style.fill = 'none';
                 path.style.stroke = color;
-                path.style.strokeWidth = 'calc(var(--fontscale) / 75)';
+                path.style.strokeWidth = 'calc(2px / var(--scaleapplied))'; // 2px at all scale levels
+
                 svg.appendChild(path);
                 bbox.appendChild(svg);
                 bbox.style.border = 'none';
@@ -13593,7 +13613,7 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
                 top = annotation.bounding_box[1];
                 width = annotation.bounding_box[2];
                 height = annotation.bounding_box[3];
-                bbox.style.border = '2px solid ' + color;
+                bbox.style.border = 'calc(2px / var(--scaleapplied)) solid ' + color;
               } else {
                 throw new Exception('Neither mask_vertices or bounding_box is passed, unknown annotation format');
               }
