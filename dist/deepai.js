@@ -13780,6 +13780,28 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
       } else {
         caption = "Face";
       }
+    } else if (visualizer_data.label_key == 'pose') {
+      var named_segments = [["nose", "right_eye"], ["nose", "left_eye"], ["right_eye", "right_ear"], ["left_eye", "left_ear"], ["right_shoulder", "right_elbow"], ["left_shoulder", "left_elbow"], ["right_elbow", "right_hand"], ["left_elbow", "left_hand"], ["right_hip", "right_knee"], ["left_hip", "left_knee"], ["right_knee", "right_foot"], ["left_knee", "left_foot"]];
+      caption = ''; // no caption for pose parts
+
+      var mask_vertices = [];
+
+      for (var _i = 0, _named_segments = named_segments; _i < _named_segments.length; _i++) {
+        var pair = _named_segments[_i];
+        var p1 = detection[visualizer_data.label_key][pair[0]];
+        var p2 = detection[visualizer_data.label_key][pair[1]];
+
+        if (p1 && p2) {
+          p1[0] *= scale_applied;
+          p1[1] *= scale_applied;
+          p2[0] *= scale_applied;
+          p2[1] *= scale_applied;
+          var polygon_part = [p1, p2];
+          mask_vertices.push(polygon_part);
+        }
+      }
+
+      detection.mask_vertices = mask_vertices;
     } else {
       caption = detection[visualizer_data.label_key]; // non demographic mode
 
