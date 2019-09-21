@@ -13792,6 +13792,10 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
         var p2 = detection[visualizer_data.label_key][pair[1]];
 
         if (p1 && p2) {
+          p1 = JSON.parse(JSON.stringify(p1)); // cheap deep clone
+
+          p2 = JSON.parse(JSON.stringify(p1)); // cheap deep clone
+
           p1[0] *= scale_applied;
           p1[1] *= scale_applied;
           p2[0] *= scale_applied;
