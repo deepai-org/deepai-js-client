@@ -5076,13 +5076,13 @@ __webpack_require__(135);
 
 var _global = _interopRequireDefault(__webpack_require__(307));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-if (_global.default._babelPolyfill && typeof console !== "undefined" && console.warn) {
+if (_global["default"]._babelPolyfill && typeof console !== "undefined" && console.warn) {
   console.warn("@babel/polyfill is loaded more than once on this page. This is probably not desirable/intended " + "and may have consequences if different versions of the polyfills are applied sequentially. " + "If you do need to load the polyfill more than once, use @babel/polyfill/noConflict " + "instead to bypass the warning.");
 }
 
-_global.default._babelPolyfill = true;
+_global["default"]._babelPolyfill = true;
 
 /***/ }),
 /* 135 */
@@ -12126,7 +12126,8 @@ function toByteArray (b64) {
     ? validLen - 4
     : validLen
 
-  for (var i = 0; i < len; i += 4) {
+  var i
+  for (i = 0; i < len; i += 4) {
     tmp =
       (revLookup[b64.charCodeAt(i)] << 18) |
       (revLookup[b64.charCodeAt(i + 1)] << 12) |
@@ -13139,7 +13140,10 @@ var WAD_COLORS = ["rgb(173, 35, 35)", // Red
 "rgb(255, 146, 51)", // Orange
 "rgb(199, 183, 0)", // Yellow
 "rgb(233, 222, 187)", // Tan
-"rgb(255, 205, 243)"];
+"rgb(255, 205, 243)" // Pink
+// "rgb(255, 255, 255)", // White
+//"rgb(0, 0, 0)",       // Black
+];
 var isAbsolute = new RegExp('^([a-z]+://|//)', 'i');
 var isDataOrBlob = new RegExp('^(data|blob):', 'i');
 
