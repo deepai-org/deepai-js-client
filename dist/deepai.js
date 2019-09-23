@@ -13795,11 +13795,12 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
           p1 = JSON.parse(JSON.stringify(p1)); // cheap deep clone
 
           p2 = JSON.parse(JSON.stringify(p2)); // cheap deep clone
+          // Do not rescale here - let the mask rescale handle this
+          //                    p1[0] *= scale_applied;
+          //                    p1[1] *= scale_applied;
+          //                    p2[0] *= scale_applied;
+          //                    p2[1] *= scale_applied;
 
-          p1[0] *= scale_applied;
-          p1[1] *= scale_applied;
-          p2[0] *= scale_applied;
-          p2[1] *= scale_applied;
           var polygon_part = [p1, p2];
           mask_vertices.push(polygon_part);
         }
@@ -13827,7 +13828,8 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
       detection.bounding_box[1] *= scale_applied;
       detection.bounding_box[2] *= scale_applied;
       detection.bounding_box[3] *= scale_applied;
-    }
+    } // Note: this also handles pose results!
+
 
     if (detection.mask_vertices) {
       var _iteratorNormalCompletion8 = true;
