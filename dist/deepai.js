@@ -13749,7 +13749,7 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
   detections.sort(function (a, b) {
     return b.confidence - a.confidence;
   });
-  var count = Math.min(15, detections.length);
+  var count = detections.length;
   var processed_annotations = [];
 
   for (var i = 0; i < count; i++) {
