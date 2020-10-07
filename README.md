@@ -139,9 +139,11 @@ var result = await deepai.callStandardApi("content-moderation", {
 ```
 
 
-## Build this library (not required for users of this libary): 
+## Build & publish this library (not required for users of this libary): 
 
 ```bash
 npm install
 npm run-script build
+npm login
+npm publish
 ```
