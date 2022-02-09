@@ -1,1 +1,1 @@
-module.exports = require('./lib/deepai');
+module.exports = require("./lib/deepai");
