@@ -1,16 +1,24 @@
 {
   "presets": [
-      [
-          "@babel/preset-env",
-          {
-            "useBuiltIns": false,
-            "targets": {
-                "chrome": "35",
-                "ie": "8",
-                "safari": "3"
-            }
-          }
-        ]
-    ],
-  "plugins": ["@babel/transform-async-to-generator"]
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": false,
+        "targets": {
+          "chrome": "35",
+          "ie": "8",
+          "safari": "3"
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/transform-async-to-generator",
+    [
+      "@babel/plugin-transform-modules-commonjs",
+      {
+        "allowTopLevelThis": true
+      }
+    ]
+  ]
 }

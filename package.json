@@ -1,6 +1,6 @@
 {
   "name": "deepai",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "license": "BSD-2-Clause",
   "repository": {
     "type": "git",
@@ -8,11 +8,12 @@
   },
   "homepage": "https://deepai.org/",
   "dependencies": {
-    "axios": "0.25.0",
-    "form-data": "4.0.0",
-    "regenerator-runtime": "^0.13.9"
+    "form-data": "4.0.0"
   },
   "devDependencies": {
+    "axios": "0.25.0",
+    "regenerator-runtime": "^0.13.9",
+    "util": "^0.12.4",
     "@babel/core": "7.17.2",
     "@babel/plugin-transform-async-to-generator": "^7.16.8",
     "@babel/preset-env": "7.16.11",

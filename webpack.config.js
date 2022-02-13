@@ -7,10 +7,28 @@ function generateConfig(name) {
 
   var config = {
     entry: ["regenerator-runtime/runtime.js", "./index.js"],
+    target: "node",
+    // resolve: {
+    //     fallback: {
+    //       "fs": false,
+    //       "tls": false,
+    //       "net": false,
+    //       "path": false,
+    //       "zlib": false,
+    //       "http": false,
+    //       "https": false,
+    //       "stream": false,
+    //       "crypto": false,
+    //       "crypto-browserify":false,
+    //       "util": require.resolve("util/")
+    //     }
+    //   },
     output: {
       path: path.resolve(__dirname, "dist/"),
       filename: name + ".js",
       sourceMapFilename: name + ".map",
+      globalObject: "this",
+
       library: {
         name: "deepai",
         type: "umd",
