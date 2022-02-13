@@ -7,7 +7,7 @@ function generateConfig(name) {
 
   var config = {
     entry: ["regenerator-runtime/runtime.js", "./index.js"],
-    target: "node",
+    target: "web",
     // resolve: {
     //     fallback: {
     //       "fs": false,
@@ -32,8 +32,8 @@ function generateConfig(name) {
       library: {
         name: "deepai",
         type: "umd",
-        umdNamedDefine: true, // Important
-        export: "default",
+        // umdNamedDefine: true, // Important
+        // export: "default",
       },
     },
     node: {},
