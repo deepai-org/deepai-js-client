@@ -1,4 +1,5 @@
 # DeepAI JS Client
+
 [![npm version](https://img.shields.io/npm/v/deepai.svg?style=flat-square)](https://www.npmjs.org/package/deepai)
 
 Simple Javascript Client Library for [Deep AI's](https://deepai.org) APIs from Browser and Node.js
@@ -6,19 +7,22 @@ Simple Javascript Client Library for [Deep AI's](https://deepai.org) APIs from B
 ## Installation:
 
 Node.js or other environments using npm:
+
 ```bash
 npm install --save deepai
 ```
 
 Browser:
-* Option 1: (Recommended) Load the library from DeepAI's CDN:
-    ```
-    <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
-    ```
-* Option 2: Download and copy "dist/deepai.min.js" into your project and include in HTML
-* Option 3: include this npm package, use [webpack](https://webpack.js.org/) or [browserify](http://browserify.org/), and "require('deepai'')"
+
+- Option 1: (Recommended) Load the library from DeepAI's CDN:
+  ```
+  <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
+  ```
+- Option 2: Download and copy "dist/deepai.min.js" into your project and include in HTML
+- Option 3: include this npm package, use [webpack](https://webpack.js.org/) or [browserify](http://browserify.org/), and "require('deepai'')"
 
 ## Usage Examples:
+
 Most examples are for [Content Moderation](https://deepai.org/machine-learning-model/content-moderation), but you can subsitute any model name available at DeepAI.
 
 Ensure that you pass the correct input names. Not all model input names are "image". You can find the correct input name on the page for each model at [DeepAI.org](https://deepai.org)
@@ -26,40 +30,43 @@ Ensure that you pass the correct input names. Not all model input names are "ima
 All examples use [Async-Await](https://javascript.info/async-await) syntax, so ensure you run the code in an async function.
 
 #### Browser:
+
 ```js
 // Ensure you load deepai with one of the methods in "Installation"
-deepai.setApiKey('YOUR_API_KEY'); // get your free API key at https://deepai.org
+deepai.setApiKey("YOUR_API_KEY"); // get your free API key at https://deepai.org
 ```
 
-
 Pass URL:
+
 ```js
 var result = await deepai.callStandardApi("content-moderation", {
-    image: "https://YOUR_IMAGE_URL"
+  image: "https://YOUR_IMAGE_URL",
 });
 ```
 
 Pass Literal Text:
+
 ```js
 var result = await deepai.callStandardApi("sentiment-analysis", {
-    text: "I am very happy to play with the newest APIs!"
+  text: "I am very happy to play with the newest APIs!",
 });
 ```
-
 
 Pass Image DOM Element:
+
 ```js
 var result = await deepai.callStandardApi("content-moderation", {
-    image: document.getElementById('yourImageId')
-});
-```
-Pass [File Picker](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file) Element:
-```js
-var result = await deepai.callStandardApi("content-moderation", {
-    image: document.getElementById('yourFilePickerId')
+  image: document.getElementById("yourImageId"),
 });
 ```
 
+Pass [File Picker](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file) Element:
+
+```js
+var result = await deepai.callStandardApi("content-moderation", {
+  image: document.getElementById("yourFilePickerId"),
+});
+```
 
 ##### Browser Result Rendering
 
@@ -67,16 +74,16 @@ This code will render the result of the API call into an existing HTML element, 
 
 The result will fit itself inside your container, so be sure to set a size on it.
 
-
 ```js
 var result = await deepai.callStandardApi("content-moderation", {
-    image: "https://YOUR_IMAGE_URL"
+  image: "https://YOUR_IMAGE_URL",
 });
 
-await deepai.renderResultIntoElement(result, document.getElementById('yourResultContainerId'));
-
+await deepai.renderResultIntoElement(
+  result,
+  document.getElementById("yourResultContainerId")
+);
 ```
-
 
 ##### Rendering a result without an extra network request:
 
@@ -96,7 +103,7 @@ var resultAnnotated = {
     visualizer_data: {
         list_key: 'Objects', (Name of the list property containing annotations)
         label_key: 'Object' (Name of the value property to label annotations with)
-    }, 
+    },
     scale_applied: 1.333 (Scale to multiply all detection x y coordinates by before rendering)
 };
 
@@ -104,30 +111,31 @@ deepai.renderAnnotatedResultIntoElement(resultAnnotated, document.getElementById
 
 ```
 
-
 #### Node.js
 
 ```js
-const deepai = require('deepai');
-deepai.setApiKey('YOUR_API_KEY'); // get your free API key at https://deepai.org
+const deepai = require("deepai");
+deepai.setApiKey("YOUR_API_KEY"); // get your free API key at https://deepai.org
 ```
 
-
 Pass URL:
+
 ```js
 var result = await deepai.callStandardApi("content-moderation", {
-    image: "https://YOUR_IMAGE_URL"
+  image: "https://YOUR_IMAGE_URL",
 });
 ```
 
 Pass Literal Text:
+
 ```js
 var result = await deepai.callStandardApi("sentiment-analysis", {
-    text: "I am very happy to play with the newest APIs!"
+  text: "I am very happy to play with the newest APIs!",
 });
 ```
 
 Pass File Upload:
+
 ```js
 const fs = require('fs');
 
@@ -138,8 +146,7 @@ var result = await deepai.callStandardApi("content-moderation", {
 });
 ```
 
-
-## Build & publish this library (not required for users of this libary): 
+## Build & publish this library (not required for users of this libary):
 
 ```bash
 npm install
@@ -147,3 +154,8 @@ npm run-script build
 npm login
 npm publish
 ```
+
+## How the npm package works:
+
+The webpack generated code (in dist/) is only used in the browser.
+The code in the lib folder is used in Node.js, although it would also work in the browser (for say, a React webpack app).
