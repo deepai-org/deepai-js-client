@@ -2098,20 +2098,28 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var axios = __webpack_require__(669); // import formData from "./formData.js";
-// const Buffer = require('buffer/').Buffer; // note: the trailing slash is important!
-
+var axios = __webpack_require__(669);
 
 var apiBaseUrl = (__webpack_require__(732).baseUrl);
 
 var resultRendering = __webpack_require__(244);
 
-var globalObject = Function("return this")();
+var globalObject = function () {
+  return this;
+}();
 
-if (globalObject.FormData) {
-  var formData = globalObject.FormData;
+var formData;
+
+if (typeof window !== 'undefined' && window.FormData) {
+  // We're in a browser environment
+  formData = window.FormData;
 } else {
-  var formData = eval('require("form-data")'); // todo, find a better way to do this.
+  // We're in a node environment
+  try {
+    formData = __webpack_require__(230);
+  } catch (error) {
+    console.error("Error requiring form-data:", error); // Handle the error or set a default value for formData
+  }
 }
 /**
  * Create a new instance of DeepAI
@@ -2119,12 +2127,16 @@ if (globalObject.FormData) {
  */
 
 
-function DeepAI() {
-  this.axiosInstance = axios.create({
-    headers: {
-      "client-library": "deepai-js-client"
-    }
-  });
+function DeepAI(customAxiosInstance) {
+  if (customAxiosInstance) {
+    this.axiosInstance = customAxiosInstance;
+  } else {
+    this.axiosInstance = axios.create({
+      headers: {
+        "client-library": "deepai-js-client"
+      }
+    });
+  }
 }
 
 DeepAI.prototype.setApiKey = function (apiKey) {
@@ -2138,7 +2150,7 @@ function urlForModel(model_name) {
 
 DeepAI.prototype.callStandardApi = /*#__PURE__*/function () {
   var _request = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(model_name, inputs_object) {
-    var form, _i, _Object$keys, key, element, req_options, response;
+    var form, _i, _Object$keys, key, input, req_options, response;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -2154,111 +2166,104 @@ DeepAI.prototype.callStandardApi = /*#__PURE__*/function () {
             }
 
             key = _Object$keys[_i];
+            input = inputs_object[key];
 
-            if (!(inputs_object[key] === null || inputs_object[key] === undefined)) {
-              _context.next = 6;
+            if (input) {
+              _context.next = 7;
               break;
             }
 
             return _context.abrupt("continue", 40);
 
-          case 6:
-            if (!(typeof inputs_object[key] === "string")) {
-              _context.next = 10;
+          case 7:
+            if (!(typeof input === "string")) {
+              _context.next = 11;
               break;
             }
 
-            form.append(key, inputs_object[key]); // a string could be a URL or just some text data. both are OK
-
+            form.append(key, input);
             _context.next = 40;
             break;
 
-          case 10:
-            if (!(globalObject.Element && inputs_object[key] instanceof globalObject.Element)) {
+          case 11:
+            if (!(globalObject.Element && input instanceof globalObject.Element)) {
               _context.next = 31;
               break;
             }
 
-            element = inputs_object[key];
-
-            if (!(element.tagName === "IMG")) {
+            if (!(input.tagName === "IMG")) {
               _context.next = 20;
               break;
             }
 
-            if (!element.src) {
+            if (!input.src) {
               _context.next = 17;
               break;
             }
 
-            // pass the src url
-            form.append(key, element.src); // TODO do something about data URLs
-            // TODO do something about blob URLs
+            form.append(key, input.src); // TODO: Handle data URLs and blob URLs
 
             _context.next = 18;
             break;
 
           case 17:
-            throw new Error("DeepAI error: Image element has no SRC: " + key);
+            throw new Error("DeepAI error: Image element has no SRC: ".concat(key));
 
           case 18:
             _context.next = 29;
             break;
 
           case 20:
-            if (!(element.tagName === "INPUT" && element.files !== undefined)) {
+            if (!(input.tagName === "INPUT" && input.files)) {
               _context.next = 28;
               break;
             }
 
-            if (!(element.files.length > 0)) {
+            if (!(input.files.length > 0)) {
               _context.next = 25;
               break;
             }
 
-            form.append(key, element.files[0], "file.jpeg");
+            form.append(key, input.files[0], "file.jpeg");
             _context.next = 26;
             break;
 
           case 25:
-            throw new Error("DeepAI error: File picker has no file picked: " + key);
+            throw new Error("DeepAI error: File picker has no file picked: ".concat(key));
 
           case 26:
             _context.next = 29;
             break;
 
           case 28:
-            throw new Error("DeepAI error: DOM Element type for key: " + key);
+            throw new Error("DeepAI error: DOM Element type for key: ".concat(key));
 
           case 29:
             _context.next = 40;
             break;
 
           case 31:
-            if (!inputs_object[key].hasOwnProperty("fd")) {
+            if (!input.hasOwnProperty("fd")) {
               _context.next = 35;
               break;
             }
 
-            // Seems to be a nodejs stream.
-            form.append(key, inputs_object[key]); // form-data in nodejs can handle this
-
+            form.append(key, input);
             _context.next = 40;
             break;
 
           case 35:
-            if (!(globalObject.Buffer && Buffer.isBuffer(inputs_object[key]))) {
+            if (!(globalObject.Buffer && globalObject.Buffer.isBuffer(input))) {
               _context.next = 39;
               break;
             }
 
-            form.append(key, inputs_object[key], "file.jpeg"); // form-data in nodejs can handle this
-
+            form.append(key, input, "file.jpeg");
             _context.next = 40;
             break;
 
           case 39:
-            throw new Error("DeepAI error: unknown input type for key: " + key);
+            throw new Error("DeepAI error: unknown input type for key: ".concat(key));
 
           case 40:
             _i++;
@@ -2563,7 +2568,7 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
             img_tag.src = prependApiBaseIfNeeded(input.url);
             img_tag.style.position = "relative";
             img_tag.style.width = "100%";
-            img_tag.style.height = "100%%";
+            img_tag.style.height = "100%";
             img_tag.style.objectFit = "contain";
             scroller.appendChild(img_tag);
           }
@@ -3033,6 +3038,15 @@ module.exports = deepai;
 
 /***/ }),
 
+/***/ 230:
+/***/ ((module) => {
+
+/* eslint-env browser */
+module.exports = typeof self == 'object' ? self.FormData : window.FormData;
+
+
+/***/ }),
+
 /***/ 666:
 /***/ ((module) => {
 
@@ -3048,6 +3062,7 @@ var runtime = (function (exports) {
 
   var Op = Object.prototype;
   var hasOwn = Op.hasOwnProperty;
+  var defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; };
   var undefined; // More compressible than void 0.
   var $Symbol = typeof Symbol === "function" ? Symbol : {};
   var iteratorSymbol = $Symbol.iterator || "@@iterator";
@@ -3080,7 +3095,7 @@ var runtime = (function (exports) {
 
     // The ._invoke method unifies the implementations of the .next,
     // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
+    defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) });
 
     return generator;
   }
@@ -3141,8 +3156,12 @@ var runtime = (function (exports) {
   var Gp = GeneratorFunctionPrototype.prototype =
     Generator.prototype = Object.create(IteratorPrototype);
   GeneratorFunction.prototype = GeneratorFunctionPrototype;
-  define(Gp, "constructor", GeneratorFunctionPrototype);
-  define(GeneratorFunctionPrototype, "constructor", GeneratorFunction);
+  defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: true });
+  defineProperty(
+    GeneratorFunctionPrototype,
+    "constructor",
+    { value: GeneratorFunction, configurable: true }
+  );
   GeneratorFunction.displayName = define(
     GeneratorFunctionPrototype,
     toStringTagSymbol,
@@ -3252,7 +3271,7 @@ var runtime = (function (exports) {
 
     // Define the unified helper method that is used to implement .next,
     // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
+    defineProperty(this, "_invoke", { value: enqueue });
   }
 
   defineIteratorMethods(AsyncIterator.prototype);
@@ -3362,31 +3381,32 @@ var runtime = (function (exports) {
   // delegate iterator, or by modifying context.method and context.arg,
   // setting context.delegate to null, and returning the ContinueSentinel.
   function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
+    var methodName = context.method;
+    var method = delegate.iterator[methodName];
     if (method === undefined) {
       // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
+      // method, or a missing .next mehtod, always terminate the
+      // yield* loop.
       context.delegate = null;
 
-      if (context.method === "throw") {
-        // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
+      // Note: ["return"] must be used for ES3 parsing compatibility.
+      if (methodName === "throw" && delegate.iterator["return"]) {
+        // If the delegate iterator has a return method, give it a
+        // chance to clean up.
+        context.method = "return";
+        context.arg = undefined;
+        maybeInvokeDelegate(delegate, context);
 
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
+        if (context.method === "throw") {
+          // If maybeInvokeDelegate(context) changed context.method from
+          // "return" to "throw", let that override the TypeError below.
+          return ContinueSentinel;
         }
-
+      }
+      if (methodName !== "return") {
         context.method = "throw";
         context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
+          "The iterator does not provide a '" + methodName + "' method");
       }
 
       return ContinueSentinel;
@@ -3490,7 +3510,8 @@ var runtime = (function (exports) {
     this.reset(true);
   }
 
-  exports.keys = function(object) {
+  exports.keys = function(val) {
+    var object = Object(val);
     var keys = [];
     for (var key in object) {
       keys.push(key);
