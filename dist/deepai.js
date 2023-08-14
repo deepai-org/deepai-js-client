@@ -2591,18 +2591,18 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
           innerDoc.style.margin = "0px";
           innerDoc.style.overflow = "hidden";
           /*
-                      var css = `
+                     var css = `
                         boundingbox:hover{
                             background-color: #00ff00
                         }
                     `;
                     var style = document.createElement('style');
-                      if (style.styleSheet) {
+                     if (style.styleSheet) {
                         style.styleSheet.cssText = css;
                     } else {
                         style.appendChild(document.createTextNode(css));
                     }
-                      resultscaler.contentDocument.head.appendChild(style);
+                     resultscaler.contentDocument.head.appendChild(style);
           */
 
           var bbox_container = document.createElement("boundingboxcontainer");
