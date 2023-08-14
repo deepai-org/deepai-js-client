@@ -3,160 +3,165 @@
 [![npm version](https://img.shields.io/npm/v/deepai.svg?style=flat-square)](https://www.npmjs.org/package/deepai)
 [![CodeQL](https://github.com/deepai-org/deepai-js-client/actions/workflows/codeql.yml/badge.svg)](https://github.com/deepai-org/deepai-js-client/actions/workflows/codeql.yml)
 
-Simple Javascript Client Library for [Deep AI's](https://deepai.org) APIs from Browser and Node.js
+The official Javascript Client Library for accessing [Deep AI's](https://deepai.org) advanced machine learning models. Designed for both browser and Node.js environments.
 
 ## Installation:
 
-Node.js or other environments using npm:
+### Node.js or other environments using npm:
 
 ```bash
 npm install --save deepai
 ```
 
-Browser:
+### Browser:
 
-- Option 1: (Recommended) Load the library from DeepAI's CDN:
-  ```
-  <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
-  ```
-- Option 2: Download and copy "dist/deepai.min.js" into your project and include in HTML
-- Option 3: include this npm package, use [webpack](https://webpack.js.org/) or [browserify](http://browserify.org/), and "require('deepai'')"
+- Option 1 (Recommended): Load the library from DeepAI's CDN:
+
+```html
+<script src="https://cdnjs.deepai.org/deepai.min.js"></script>
+```
+- Option 2: Download and copy "dist/deepai.min.js" into your project and include in HTML.
+- Option 3: Include this npm package, bundle with tools like webpack or browserify, and use require('deepai').
 
 ## Usage Examples:
+Most examples are for NSFW Detector (nsfw-detector), but you can substitute any model name from the DeepAI model list.
 
-Most examples are for [Content Moderation](https://deepai.org/machine-learning-model/content-moderation), but you can subsitute any model name available at DeepAI.
+Ensure that you pass the correct input names. They vary based on the model. Refer to each model's documentation on DeepAI.org for specifics.
 
-Ensure that you pass the correct input names. Not all model input names are "image". You can find the correct input name on the page for each model at [DeepAI.org](https://deepai.org)
+All examples use Async-Await syntax, so ensure you run the code in an async function.
 
-All examples use [Async-Await](https://javascript.info/async-await) syntax, so ensure you run the code in an async function.
-
-#### Browser:
-
+### Browser:
+Initialize and set your API key:
 ```js
-// Ensure you load deepai with one of the methods in "Installation"
-deepai.setApiKey("YOUR_API_KEY"); // get your free API key at https://deepai.org
+deepai.setApiKey("YOUR_API_KEY"); // Obtain your API key from https://deepai.org
 ```
 
 Pass URL:
-
+Using the Super Resolution model:
 ```js
-var result = await deepai.callStandardApi("content-moderation", {
+var result = await deepai.callStandardApi("torch-srgan", {
   image: "https://YOUR_IMAGE_URL",
 });
 ```
 
 Pass Literal Text:
-
+For the Text Generation model:
 ```js
-var result = await deepai.callStandardApi("sentiment-analysis", {
-  text: "I am very happy to play with the newest APIs!",
+var result = await deepai.callStandardApi("text-generator", {
+  text: "Your long article or text goes here.",
 });
 ```
 
 Pass Image DOM Element:
-
+Using the NSFW Detector model:
 ```js
-var result = await deepai.callStandardApi("content-moderation", {
+var result = await deepai.callStandardApi("nsfw-detector", {
   image: document.getElementById("yourImageId"),
 });
 ```
 
-Pass [File Picker](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file) Element:
 
+Pass File Picker Element:
+Using the Waifu 2x model:
 ```js
-var result = await deepai.callStandardApi("content-moderation", {
+var result = await deepai.callStandardApi("waifu2x", {
   image: document.getElementById("yourFilePickerId"),
 });
 ```
 
-##### Browser Result Rendering
-
-This code will render the result of the API call into an existing HTML element, such as a div, with the id "yourResultContainerId".
-
-The result will fit itself inside your container, so be sure to set a size on it.
-
-```js
-var result = await deepai.callStandardApi("content-moderation", {
-  image: "https://YOUR_IMAGE_URL",
-});
-
-await deepai.renderResultIntoElement(
-  result,
-  document.getElementById("yourResultContainerId")
-);
-```
-
-##### Rendering a result without an extra network request:
-
-The function renderAnnotatedResultIntoElement is for advanced users only.
-
-```js
-var resultAnnotated = {
-    output_url: <Pass URL of the model output>
-    output: <Pass the model output directly in case of JSON or text output>
-    id: "fa616aa1-c762-4c98-b44e-75781627974a" <pass your job ID>
-    inputs:[
-        {
-            is_img: true,
-            url: (relative or absolute img url, annotations will be rendered on top of this result url.)
-        }
-    ],
-    visualizer_data: {
-        list_key: 'Objects', (Name of the list property containing annotations)
-        label_key: 'Object' (Name of the value property to label annotations with)
-    },
-    scale_applied: 1.333 (Scale to multiply all detection x y coordinates by before rendering)
-};
-
-deepai.renderAnnotatedResultIntoElement(resultAnnotated, document.getElementById('yourResultContainerId'));
-
-```
-
-#### Node.js
-
+### Node.js:
+Initialize and set your API key:
 ```js
 const deepai = require("deepai");
-deepai.setApiKey("YOUR_API_KEY"); // get your free API key at https://deepai.org
+deepai.setApiKey("YOUR_API_KEY"); // Obtain your API key from https://deepai.org
 ```
 
 Pass URL:
+Using the NSFW Detector model:
 
 ```js
-var result = await deepai.callStandardApi("content-moderation", {
+var result = await deepai.callStandardApi("nsfw-detector", {
   image: "https://YOUR_IMAGE_URL",
 });
 ```
 
 Pass Literal Text:
-
+For the Text Generation model:
 ```js
-var result = await deepai.callStandardApi("sentiment-analysis", {
-  text: "I am very happy to play with the newest APIs!",
+var result = await deepai.callStandardApi("text-generator", {
+  text: "Your long article or text goes here.",
 });
 ```
 
 Pass File Upload:
-
+Using the NSFW Detector model:
 ```js
 const fs = require('fs');
 
-<...>
+// ...
 
-var result = await deepai.callStandardApi("content-moderation", {
+var result = await deepai.callStandardApi("nsfw-detector", {
     image: fs.createReadStream('/path/to/your/file.jpg')
 });
 ```
 
-## Build & publish this library (not required for users of this libary):
 
-```bash
+## Available Models:
+### Text to Text:
+- Text Generator (`text-generator`)
+### Image to Text:
+- NSFW Detector (`nsfw-detector`)
+- Image Similarity (`image-similarity`)
+### Text to Image:
+- Text to Image (`text2img`)
+- Stable Diffusion (`stable-diffusion`)
+- Cute Creature Generator (`cute-creature-generator`)
+- Fantasy World Generator (`fantasy-world-generator`)
+- Cyberpunk Generator (`cyberpunk-generator`)
+- Anime Portrait Generator (`anime-portrait-generator`)
+- Old Style Generator (`old-style-generator`)
+- Renaissance Painting Generator (`renaissance-painting-generator`)
+- Abstract Painting Generator (`abstract-painting-generator`)
+- Impressionism Painting Generator (`impressionism-painting-generator`)
+- Surreal Graphics Generator (`surreal-graphics-generator`)
+- 3D Objects Generator (`3d-objects-generator`)
+- Origami 3D Generator (`origami-3d-generator`)
+- Hologram 3D Generator (`hologram-3d-generator`)
+- 3D Character Generator (`3d-character-generator`)
+- Watercolor Painting Generator (`watercolor-painting-generator`)
+- Pop Art Generator (`pop-art-generator`)
+- Contemporary Architecture Generator (`contemporary-architecture-generator`)
+- Future Architecture Generator (`future-architecture-generator`)
+- Watercolor Architecture Generator (`watercolor-architecture-generator`)
+- Fantasy Character Generator (`fantasy-character-generator`)
+- Steampunk Generator (`steampunk-generator`)
+- Logo Generator (`logo-generator`)
+- Pixel Art Generator (`pixel-art-generator`)
+- Street Art Generator (`street-art-generator`)
+- Surreal Portrait Generator (`surreal-portrait-generator`)
+- Anime World Generator (`anime-world-generator`)
+- Fantasy Portrait Generator (`fantasy-portrait-generator`)
+- Comics Portrait Generator (`comics-portrait-generator`)
+- Cyberpunk Portrait Generator (`cyberpunk-portrait-generator`)
+### Image to Image:
+- Super Resolution (`torch-srgan`)
+- Waifu2x (`waifu2x`)
+- Colorizer (`colorizer`)
+
+## Development:
+### Build & Publish:
+For contributors and maintainers of the library:
+```js
 npm install
 npm run-script build
 npm login
 npm publish
 ```
 
-## How the npm package works:
+## More Information:
+The browser-based build uses the webpack-generated code in dist/. The Node.js environment utilizes the code in the lib folder, which can also function in the browser, for instance, in a React webpack application.
 
-The webpack generated code (in dist/) is only used in the browser.
-The code in the lib folder is used in Node.js, although it would also work in the browser (for say, a React webpack app).
+For more detailed documentation, model explanations, and FAQs, visit DeepAI.org.
+
+## License:
+[MIT License](https://github.com/deepai-org/deepai-js-client/blob/master/LICENSE)
