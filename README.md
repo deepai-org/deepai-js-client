@@ -104,7 +104,41 @@ var result = await deepai.callStandardApi("nsfw-detector", {
     image: fs.createReadStream('/path/to/your/file.jpg')
 });
 ```
+### Text to Image Options:
+For all "Text to Image" models, the following options are available:
 
+#### `text`:
+(Required) A string, URL, or binary text file that serves as the main prompt for the image generation.
+
+#### `negative_prompt`:
+(Optional) A string to indicate elements you'd like to be removed from or avoided in the image.
+
+Can be used to enhance image quality and details.
+
+Example negative prompts:
+
+bad anatomy, bad proportions, blurry, cloned face, cropped, deformed, dehydrated, disfigured, duplicate, error, extra arms, extra fingers, extra legs, extra limbs, fused fingers, gross proportions, jpeg artifacts, long neck, low quality, lowres, malformed limbs, missing arms, missing legs, morbid, mutated hands, mutation, mutilated, out of frame, poorly drawn face, poorly drawn hands, signature, text, too many fingers, ugly, username, watermark, worst quality.
+
+#### `grid_size`:
+(Optional) Pass a string, either "1" or "2".
+
+“2” is the default, which returns a 2x2 grid with 4 images. Pass “1” to only receive 1 image.
+
+#### `width`, `height`:
+(Optional) Pass a string, e.g., "256" or "768". Default is "512".
+Acceptable values range between 128 and 1536. Note: values above approximately 700 or below 256 may produce strange outputs.
+
+Example:
+```json
+{
+	"text": "A serene beach at sunset",
+	"negative_prompt": "No people",
+	"grid_size": "4x4",
+	"width": "1024",
+	"height": "768"
+}
+```
+Adjust these options to customize the output according to your requirements.
 
 ## Available Models:
 ### Text to Text:
