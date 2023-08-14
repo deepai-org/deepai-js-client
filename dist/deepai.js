@@ -2104,10 +2104,8 @@ var apiBaseUrl = (__webpack_require__(732).baseUrl);
 
 var resultRendering = __webpack_require__(244);
 
-var globalObject = function () {
-  return this;
-}();
-
+var isBrowserEnv = typeof window !== 'undefined';
+var globalObject = isBrowserEnv ? window : __webpack_require__.g;
 var formData;
 
 if (typeof window !== 'undefined' && window.FormData) {
@@ -2186,7 +2184,7 @@ DeepAI.prototype.callStandardApi = /*#__PURE__*/function () {
             break;
 
           case 11:
-            if (!(globalObject.Element && input instanceof globalObject.Element)) {
+            if (!(isBrowserEnv && input instanceof globalObject.Element)) {
               _context.next = 31;
               break;
             }
@@ -2593,18 +2591,18 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
           innerDoc.style.margin = "0px";
           innerDoc.style.overflow = "hidden";
           /*
-                     var css = `
+                      var css = `
                         boundingbox:hover{
                             background-color: #00ff00
                         }
                     `;
                     var style = document.createElement('style');
-                     if (style.styleSheet) {
+                      if (style.styleSheet) {
                         style.styleSheet.cssText = css;
                     } else {
                         style.appendChild(document.createTextNode(css));
                     }
-                     resultscaler.contentDocument.head.appendChild(style);
+                      resultscaler.contentDocument.head.appendChild(style);
           */
 
           var bbox_container = document.createElement("boundingboxcontainer");
@@ -3840,6 +3838,19 @@ try {
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
 /******/ 	
 /************************************************************************/
 /******/ 	
