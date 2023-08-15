@@ -7,7 +7,7 @@
 		exports["deepai"] = factory();
 	else
 		root["deepai"] = factory();
-})(this, function() {
+})(this, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2094,20 +2094,16 @@ module.exports = __webpack_require__(365);
 "use strict";
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return { value: void 0, done: !0 }; } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable || "" === iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } throw new TypeError(_typeof(iterable) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 var axios = __webpack_require__(669);
-
 var apiBaseUrl = (__webpack_require__(732).baseUrl);
-
 var resultRendering = __webpack_require__(244);
-
 var isBrowserEnv = typeof window !== 'undefined';
 var globalObject = isBrowserEnv ? window : __webpack_require__.g;
 var formData;
-
 if (typeof window !== 'undefined' && window.FormData) {
   // We're in a browser environment
   formData = window.FormData;
@@ -2116,14 +2112,15 @@ if (typeof window !== 'undefined' && window.FormData) {
   try {
     formData = __webpack_require__(230);
   } catch (error) {
-    console.error("Error requiring form-data:", error); // Handle the error or set a default value for formData
+    console.error("Error requiring form-data:", error);
+    // Handle the error or set a default value for formData
   }
 }
+
 /**
  * Create a new instance of DeepAI
  *
  */
-
 
 function DeepAI(customAxiosInstance) {
   if (customAxiosInstance) {
@@ -2136,170 +2133,131 @@ function DeepAI(customAxiosInstance) {
     });
   }
 }
-
 DeepAI.prototype.setApiKey = function (apiKey) {
   this.apiKey = apiKey;
   this.axiosInstance.defaults.headers.common["api-key"] = apiKey;
 };
-
 function urlForModel(model_name) {
   return apiBaseUrl + "/api/" + model_name;
 }
-
 DeepAI.prototype.callStandardApi = /*#__PURE__*/function () {
-  var _request = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(model_name, inputs_object) {
+  var _request = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(model_name, inputs_object) {
     var form, _i, _Object$keys, key, input, req_options, response;
-
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            form = new formData();
-            _i = 0, _Object$keys = Object.keys(inputs_object);
-
-          case 2:
-            if (!(_i < _Object$keys.length)) {
-              _context.next = 43;
-              break;
-            }
-
-            key = _Object$keys[_i];
-            input = inputs_object[key];
-
-            if (input) {
-              _context.next = 7;
-              break;
-            }
-
-            return _context.abrupt("continue", 40);
-
-          case 7:
-            if (!(typeof input === "string")) {
-              _context.next = 11;
-              break;
-            }
-
-            form.append(key, input);
-            _context.next = 40;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          form = new formData();
+          _i = 0, _Object$keys = Object.keys(inputs_object);
+        case 2:
+          if (!(_i < _Object$keys.length)) {
+            _context.next = 43;
             break;
-
-          case 11:
-            if (!(isBrowserEnv && input instanceof globalObject.Element)) {
-              _context.next = 31;
-              break;
-            }
-
-            if (!(input.tagName === "IMG")) {
-              _context.next = 20;
-              break;
-            }
-
-            if (!input.src) {
-              _context.next = 17;
-              break;
-            }
-
-            form.append(key, input.src); // TODO: Handle data URLs and blob URLs
-
-            _context.next = 18;
+          }
+          key = _Object$keys[_i];
+          input = inputs_object[key];
+          if (input) {
+            _context.next = 7;
             break;
-
-          case 17:
-            throw new Error("DeepAI error: Image element has no SRC: ".concat(key));
-
-          case 18:
-            _context.next = 29;
+          }
+          return _context.abrupt("continue", 40);
+        case 7:
+          if (!(typeof input === "string")) {
+            _context.next = 11;
             break;
-
-          case 20:
-            if (!(input.tagName === "INPUT" && input.files)) {
-              _context.next = 28;
-              break;
-            }
-
-            if (!(input.files.length > 0)) {
-              _context.next = 25;
-              break;
-            }
-
-            form.append(key, input.files[0], "file.jpeg");
-            _context.next = 26;
+          }
+          form.append(key, input);
+          _context.next = 40;
+          break;
+        case 11:
+          if (!(isBrowserEnv && input instanceof globalObject.Element)) {
+            _context.next = 31;
             break;
-
-          case 25:
-            throw new Error("DeepAI error: File picker has no file picked: ".concat(key));
-
-          case 26:
-            _context.next = 29;
+          }
+          if (!(input.tagName === "IMG")) {
+            _context.next = 20;
             break;
-
-          case 28:
-            throw new Error("DeepAI error: DOM Element type for key: ".concat(key));
-
-          case 29:
-            _context.next = 40;
+          }
+          if (!input.src) {
+            _context.next = 17;
             break;
-
-          case 31:
-            if (!input.hasOwnProperty("fd")) {
-              _context.next = 35;
-              break;
-            }
-
-            form.append(key, input);
-            _context.next = 40;
+          }
+          form.append(key, input.src);
+          // TODO: Handle data URLs and blob URLs
+          _context.next = 18;
+          break;
+        case 17:
+          throw new Error("DeepAI error: Image element has no SRC: ".concat(key));
+        case 18:
+          _context.next = 29;
+          break;
+        case 20:
+          if (!(input.tagName === "INPUT" && input.files)) {
+            _context.next = 28;
             break;
-
-          case 35:
-            if (!(globalObject.Buffer && globalObject.Buffer.isBuffer(input))) {
-              _context.next = 39;
-              break;
-            }
-
-            form.append(key, input, "file.jpeg");
-            _context.next = 40;
+          }
+          if (!(input.files.length > 0)) {
+            _context.next = 25;
             break;
-
-          case 39:
-            throw new Error("DeepAI error: unknown input type for key: ".concat(key));
-
-          case 40:
-            _i++;
-            _context.next = 2;
+          }
+          form.append(key, input.files[0], "file.jpeg");
+          _context.next = 26;
+          break;
+        case 25:
+          throw new Error("DeepAI error: File picker has no file picked: ".concat(key));
+        case 26:
+          _context.next = 29;
+          break;
+        case 28:
+          throw new Error("DeepAI error: DOM Element type for key: ".concat(key));
+        case 29:
+          _context.next = 40;
+          break;
+        case 31:
+          if (!input.hasOwnProperty("fd")) {
+            _context.next = 35;
             break;
-
-          case 43:
-            req_options = {
-              withCredentials: true
-            };
-
-            if (form.getHeaders !== undefined) {
-              // formData is the nodejs based subsitute, only needed for node.js
-              req_options.headers = form.getHeaders();
-            }
-
-            _context.next = 47;
-            return this.axiosInstance.post(urlForModel(model_name), form, req_options);
-
-          case 47:
-            response = _context.sent;
-            return _context.abrupt("return", response.data);
-
-          case 49:
-          case "end":
-            return _context.stop();
-        }
+          }
+          form.append(key, input);
+          _context.next = 40;
+          break;
+        case 35:
+          if (!(globalObject.Buffer && globalObject.Buffer.isBuffer(input))) {
+            _context.next = 39;
+            break;
+          }
+          form.append(key, input, "file.jpeg");
+          _context.next = 40;
+          break;
+        case 39:
+          throw new Error("DeepAI error: unknown input type for key: ".concat(key));
+        case 40:
+          _i++;
+          _context.next = 2;
+          break;
+        case 43:
+          req_options = {
+            withCredentials: true
+          };
+          if (form.getHeaders !== undefined) {
+            // formData is the nodejs based subsitute, only needed for node.js
+            req_options.headers = form.getHeaders();
+          }
+          _context.next = 47;
+          return this.axiosInstance.post(urlForModel(model_name), form, req_options);
+        case 47:
+          response = _context.sent;
+          return _context.abrupt("return", response.data);
+        case 49:
+        case "end":
+          return _context.stop();
       }
     }, _callee, this);
   }));
-
   function request(_x, _x2) {
     return _request.apply(this, arguments);
   }
-
   return request;
 }();
-
 DeepAI.prototype.renderResultIntoElement = resultRendering.renderResultIntoElement;
 DeepAI.prototype.renderAnnotatedResultIntoElement = resultRendering.renderAnnotatedResultIntoElement;
 module.exports = DeepAI;
@@ -2313,8 +2271,8 @@ module.exports = DeepAI;
 
 
 module.exports = {
-  baseUrl: "https://api.deepai.org" //baseUrl: "http://localhost:8000" // for dev
-
+  baseUrl: "https://api.deepai.org"
+  //baseUrl: "http://localhost:8000" // for dev
 };
 
 /***/ }),
@@ -2325,40 +2283,47 @@ module.exports = {
 "use strict";
 
 
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return { value: void 0, done: !0 }; } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable || "" === iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } throw new TypeError(_typeof(iterable) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 var apiBaseUrl = (__webpack_require__(732).baseUrl);
-
-var WAD_COLORS = ["rgb(173, 35, 35)", // Red
-"rgb(42, 75, 215)", // Blue
-"rgb(87, 87, 87)", // Dark Gray
-"rgb(29, 105, 20)", // Green
-"rgb(129, 74, 25)", // Brown
-"rgb(129, 38, 192)", // Purple
-"rgb(160, 160, 160)", // Lt Gray
-"rgb(129, 197, 122)", // Lt green
-"rgb(157, 175, 255)", // Lt blue
-"rgb(41, 208, 208)", // Cyan
-"rgb(255, 146, 51)", // Orange
-"rgb(199, 183, 0)", // Yellow
-"rgb(233, 222, 187)", // Tan
+var WAD_COLORS = ["rgb(173, 35, 35)",
+// Red
+"rgb(42, 75, 215)",
+// Blue
+"rgb(87, 87, 87)",
+// Dark Gray
+"rgb(29, 105, 20)",
+// Green
+"rgb(129, 74, 25)",
+// Brown
+"rgb(129, 38, 192)",
+// Purple
+"rgb(160, 160, 160)",
+// Lt Gray
+"rgb(129, 197, 122)",
+// Lt green
+"rgb(157, 175, 255)",
+// Lt blue
+"rgb(41, 208, 208)",
+// Cyan
+"rgb(255, 146, 51)",
+// Orange
+"rgb(199, 183, 0)",
+// Yellow
+"rgb(233, 222, 187)",
+// Tan
 "rgb(255, 205, 243)" // Pink
 // "rgb(255, 255, 255)", // White
 //"rgb(0, 0, 0)",       // Black
 ];
+
 var isAbsolute = new RegExp("^([a-z]+://|//)", "i");
 var isDataOrBlob = new RegExp("^(data|blob):", "i");
-
 function prependApiBaseIfNeeded(url) {
   if (isAbsolute.test(url) || isDataOrBlob.test(url)) {
     return url; // already absolute
@@ -2370,34 +2335,26 @@ function prependApiBaseIfNeeded(url) {
 function polygonToSvgPath(polygon, left, top) {
   // M 10,10 L 100,10 100,100 z    M 30,20 L 70,20 70,60 z
   var path_strings = [];
-
   var _iterator = _createForOfIteratorHelper(polygon),
-      _step;
-
+    _step;
   try {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var part = _step.value;
-
       if (part.length < 2) {
         continue;
       }
-
       path_strings.push("M");
       var first = true;
-
       var _iterator2 = _createForOfIteratorHelper(part),
-          _step2;
-
+        _step2;
       try {
         for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var point = _step2.value;
           path_strings.push(point[0] - left + "," + (point[1] - top));
-
           if (isNaN(point[0]) || isNaN(point[1])) {
             console.log("not showing invalid polygon, found NaN");
             return "";
           }
-
           if (first) {
             path_strings.push("L");
             first = false;
@@ -2408,7 +2365,6 @@ function polygonToSvgPath(polygon, left, top) {
       } finally {
         _iterator2.f();
       }
-
       path_strings.push("z");
     }
   } catch (err) {
@@ -2416,9 +2372,9 @@ function polygonToSvgPath(polygon, left, top) {
   } finally {
     _iterator.f();
   }
-
   return path_strings.join(" ");
 }
+
 /*
 
 Data structures basic info...
@@ -2471,74 +2427,59 @@ annotatedResult - this is basically the merging of the 2 above
 
 */
 // Take a result object from API call, and fetch additional data, and return the additional data merged in.
-
-
 function getAnnotatedResultFromResult(_x) {
   return _getAnnotatedResultFromResult.apply(this, arguments);
 }
-
 function _getAnnotatedResultFromResult() {
-  _getAnnotatedResultFromResult = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(result) {
+  _getAnnotatedResultFromResult = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(result) {
     var resultPageData, result_data;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (!result.err) {
-              _context.next = 3;
-              break;
-            }
-
-            console.log("cannot get result page data for error result");
-            return _context.abrupt("return", result);
-
-          case 3:
-            _context.next = 5;
-            return fetch(apiBaseUrl + "/get_standard_api_result_data/" + result.id, {
-              credentials: "include"
-            });
-
-          case 5:
-            resultPageData = _context.sent;
-            _context.next = 8;
-            return resultPageData.json();
-
-          case 8:
-            resultPageData = _context.sent;
-            result_data = resultPageData.result_data; // make merging of all the properties manually...
-
-            return _context.abrupt("return", {
-              err: result.err,
-              output: result.output,
-              output_url: result.output_url,
-              id: result.id,
-              inputs: result_data.inputs,
-              visualizer_data: result_data.visualizer_data,
-              scale_applied: result_data.scale_applied
-            });
-
-          case 11:
-          case "end":
-            return _context.stop();
-        }
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          if (!result.err) {
+            _context.next = 3;
+            break;
+          }
+          console.log("cannot get result page data for error result");
+          return _context.abrupt("return", result);
+        case 3:
+          _context.next = 5;
+          return fetch(apiBaseUrl + "/get_standard_api_result_data/" + result.id, {
+            credentials: "include"
+          });
+        case 5:
+          resultPageData = _context.sent;
+          _context.next = 8;
+          return resultPageData.json();
+        case 8:
+          resultPageData = _context.sent;
+          result_data = resultPageData.result_data; // make merging of all the properties manually...
+          return _context.abrupt("return", {
+            err: result.err,
+            output: result.output,
+            output_url: result.output_url,
+            id: result.id,
+            inputs: result_data.inputs,
+            visualizer_data: result_data.visualizer_data,
+            scale_applied: result_data.scale_applied
+          });
+        case 11:
+        case "end":
+          return _context.stop();
       }
     }, _callee);
   }));
   return _getAnnotatedResultFromResult.apply(this, arguments);
 }
-
 function renderAnnotatedResultIntoElement(annotatedResult, element) {
   element.innerHTML = ""; // remove everything to start
-
   if (annotatedResult.err) {
     element.innerHTML = err;
     return false;
   }
-
   if (annotatedResult.output) {
     // JSON or text output.
     console.log("got json or text output");
-
     if (typeof annotatedResult.output === "string") {
       var scroller = document.createElement("div");
       scroller.style.width = "100%";
@@ -2552,15 +2493,13 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
       pre.textContent = annotatedResult.output;
       pre.style.whiteSpace = "pre-wrap";
       pre.style.margin = "0px";
-      scroller.appendChild(pre); // Append inputs
-
+      scroller.appendChild(pre);
+      // Append inputs
       var _iterator3 = _createForOfIteratorHelper(annotatedResult.inputs),
-          _step3;
-
+        _step3;
       try {
         for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
           var input = _step3.value;
-
           if (input.is_img) {
             var img_tag = document.createElement("img");
             img_tag.src = prependApiBaseIfNeeded(input.url);
@@ -2576,46 +2515,43 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
       } finally {
         _iterator3.f();
       }
-
       return true;
     } else if (_typeof(annotatedResult.output) === "object") {
       // If we uploaded an image, then we may be able to render the image with boxes on top
       if (annotatedResult.inputs.length == 1 && annotatedResult.inputs[0].is_img && annotatedResult.visualizer_data) {
         // single image input and we know how to visualize it.
         console.log("have visualizer for result JSON");
-        var resultscaler = document.createElement("iframe"); // Set up a handler for when the frame loads - we need to handle this event
-
+        var resultscaler = document.createElement("iframe");
+        // Set up a handler for when the frame loads - we need to handle this event
         resultscaler.onload = function () {
           // Firefox doesnt allow inner iframe manip until the iframe is loaded...
           var innerDoc = resultscaler.contentDocument.body;
           innerDoc.style.margin = "0px";
           innerDoc.style.overflow = "hidden";
+
           /*
-                     var css = `
+                      var css = `
                         boundingbox:hover{
                             background-color: #00ff00
                         }
                     `;
                     var style = document.createElement('style');
-                     if (style.styleSheet) {
+                      if (style.styleSheet) {
                         style.styleSheet.cssText = css;
                     } else {
                         style.appendChild(document.createTextNode(css));
                     }
-                     resultscaler.contentDocument.head.appendChild(style);
+                      resultscaler.contentDocument.head.appendChild(style);
           */
 
           var bbox_container = document.createElement("boundingboxcontainer");
           bbox_container.style.position = "relative"; // the absolute positions are relative to this element
-
           bbox_container.style.opacity = "0.001"; // the result are hidden until the iframe reflows - which is first when the img loads
-
           innerDoc.appendChild(bbox_container);
           var img_tag = document.createElement("img");
           img_tag.src = prependApiBaseIfNeeded(annotatedResult.inputs[0].url);
           img_tag.style.position = "absolute";
           bbox_container.appendChild(img_tag);
-
           var iframe_reflow = function iframe_reflow() {
             console.log("iframe resize");
             resultscaler.contentDocument.body.style.transform = null;
@@ -2627,7 +2563,6 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
             var containerHeight = resultscaler.offsetHeight;
             var wExcess = 0;
             var hExcess = 0;
-
             if (imgWidth < bodyWidth && imgHeight < bodyHeight) {
               var wScale = containerWidth / imgWidth;
               var hScale = containerHeight / imgHeight;
@@ -2641,7 +2576,6 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
               wExcess = containerWidth - bodyWidth * minScale;
               hExcess = containerHeight - bodyHeight * minScale;
             }
-
             wExcess = wExcess / minScale;
             hExcess = hExcess / minScale;
             resultscaler.contentDocument.body.style.transformOrigin = "top left";
@@ -2652,16 +2586,13 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
             bbox_container.style.top = hExcess / 2 + "px";
             bbox_container.style.opacity = "1";
           };
-
           resultscaler.contentWindow.onresize = iframe_reflow;
           img_tag.onload = iframe_reflow;
           var processed_annotations = process_annotations(annotatedResult.output, annotatedResult.visualizer_data, annotatedResult.scale_applied);
           console.log("processed annotations", processed_annotations);
           var i = 0;
-
           var _iterator4 = _createForOfIteratorHelper(processed_annotations),
-              _step4;
-
+            _step4;
           try {
             for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
               var annotation = _step4.value;
@@ -2672,41 +2603,32 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
               var width;
               var height;
               var color = WAD_COLORS[i++ % WAD_COLORS.length];
-
               if (annotation.mask_vertices) {
                 var minx = null;
                 var miny = null;
                 var maxx = null;
                 var maxy = null;
-
                 var _iterator5 = _createForOfIteratorHelper(annotation.mask_vertices),
-                    _step5;
-
+                  _step5;
                 try {
                   for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
                     var part = _step5.value;
-
                     var _iterator6 = _createForOfIteratorHelper(part),
-                        _step6;
-
+                      _step6;
                     try {
                       for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
                         var point = _step6.value;
                         var x = point[0];
                         var y = point[1];
-
                         if (minx === null || x < minx) {
                           minx = x;
                         }
-
                         if (miny === null || y < miny) {
                           miny = y;
                         }
-
                         if (maxx === null || x > maxx) {
                           maxx = x;
                         }
-
                         if (maxy === null || y > maxy) {
                           maxy = y;
                         }
@@ -2722,7 +2644,6 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
                 } finally {
                   _iterator5.f();
                 }
-
                 width = maxx - minx;
                 height = maxy - miny;
                 left = minx;
@@ -2750,7 +2671,6 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
               } else {
                 throw new Exception("Neither mask_vertices or bounding_box is passed, unknown annotation format");
               }
-
               bbox.style.left = left + "px";
               bbox.style.top = top + "px";
               bbox.style.width = width + "px";
@@ -2770,9 +2690,8 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
           } finally {
             _iterator4.f();
           }
-        }; // Set the src which will end up triggering the onload event in all browsers.
-
-
+        };
+        // Set the src which will end up triggering the onload event in all browsers.
         resultscaler.src = "about:blank";
         resultscaler.style.border = "none";
         resultscaler.style.width = "100%";
@@ -2794,15 +2713,13 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
         var pre = document.createElement("pre");
         pre.style.margin = "0px";
         pre.textContent = JSON.stringify(annotatedResult.output, null, 4);
-        scroller.appendChild(pre); // Append inputs
-
+        scroller.appendChild(pre);
+        // Append inputs
         var _iterator7 = _createForOfIteratorHelper(annotatedResult.inputs),
-            _step7;
-
+          _step7;
         try {
           for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
             var input = _step7.value;
-
             if (input.is_img) {
               var img_tag = document.createElement("img");
               img_tag.src = prependApiBaseIfNeeded(input.url);
@@ -2817,8 +2734,8 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
         } finally {
           _iterator7.f();
         }
-
-        return true; // We got JSON output for a multi image or text input ... don't bother showing the input right now
+        return true;
+        // We got JSON output for a multi image or text input ... don't bother showing the input right now
       }
     } else {
       element.innerHTML = "Model returned an unknown data type.";
@@ -2826,8 +2743,8 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
     }
   } else if (annotatedResult.output_url) {
     // Image output.
-    console.log("got image output"); // Just show the image.
-
+    console.log("got image output");
+    // Just show the image.
     var img_tag = document.createElement("img");
     img_tag.src = annotatedResult.output_url;
     img_tag.style.position = "relative";
@@ -2841,61 +2758,49 @@ function renderAnnotatedResultIntoElement(annotatedResult, element) {
     return false;
   }
 }
-
 function renderResultIntoElement(_x2, _x3) {
   return _renderResultIntoElement.apply(this, arguments);
 }
-
 function _renderResultIntoElement() {
-  _renderResultIntoElement = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(result, element) {
+  _renderResultIntoElement = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(result, element) {
     var annotatedResult;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            console.log("getting result page data");
-            _context2.next = 3;
-            return getAnnotatedResultFromResult(result);
-
-          case 3:
-            annotatedResult = _context2.sent;
-            console.log("got result page data");
-            return _context2.abrupt("return", renderAnnotatedResultIntoElement(annotatedResult, element));
-
-          case 6:
-          case "end":
-            return _context2.stop();
-        }
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          console.log("getting result page data");
+          _context2.next = 3;
+          return getAnnotatedResultFromResult(result);
+        case 3:
+          annotatedResult = _context2.sent;
+          console.log("got result page data");
+          return _context2.abrupt("return", renderAnnotatedResultIntoElement(annotatedResult, element));
+        case 6:
+        case "end":
+          return _context2.stop();
       }
     }, _callee2);
   }));
   return _renderResultIntoElement.apply(this, arguments);
 }
-
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
-
 function process_annotations(input_struct, visualizer_data, scale_applied) {
   input_struct = JSON.parse(JSON.stringify(input_struct)); // cheap deep clone
-
   var detections = input_struct[visualizer_data.list_key];
   detections.sort(function (a, b) {
     return b.confidence - a.confidence;
   });
   var count = detections.length;
   var processed_annotations = [];
-
   for (var i = 0; i < count; i++) {
     var detection = detections[i];
     var caption;
-
     if (visualizer_data.label_key == "demographic") {
       if (detection[visualizer_data.label_key]) {
         caption = detection[visualizer_data.label_key]; // backwards compatible demog format
@@ -2906,19 +2811,15 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
     } else if (visualizer_data.label_key == "people") {
       //produces "Sad, White Male, 30-40, Ted Cruz"
       var parts = [];
-
       if (detection["facial-expression-recognition"] && detection["facial-expression-recognition"]["emotion"] != null) {
         parts.push(capitalizeFirstLetter(detection["facial-expression-recognition"]["emotion"]));
       }
-
       if (detection["demographic-recognition"] && detection["demographic-recognition"]["cultural_appearance"] != null) {
         parts.push(detection["demographic-recognition"]["cultural_appearance"] + " " + detection["demographic-recognition"]["gender"] + ", " + detection["demographic-recognition"]["age_range"][0] + "-" + detection["demographic-recognition"]["age_range"][1]);
       }
-
       if (detection["celebrity-recognition"] && detection["celebrity-recognition"]["name"] != null && detection["celebrity-recognition"]["name"] != "unknown") {
         parts.push(toTitleCase(detection["celebrity-recognition"]["name"]));
       }
-
       if (parts.length > 0) {
         caption = parts.join(", ");
       } else {
@@ -2929,36 +2830,30 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
       caption = ""; // no caption for pose parts
 
       var mask_vertices = [];
-
       for (var _i = 0, _named_segments = named_segments; _i < _named_segments.length; _i++) {
         var pair = _named_segments[_i];
         var p1 = detection[visualizer_data.label_key][pair[0]];
         var p2 = detection[visualizer_data.label_key][pair[1]];
-
         if (p1 && p2) {
           p1 = JSON.parse(JSON.stringify(p1)); // cheap deep clone
-
           p2 = JSON.parse(JSON.stringify(p2)); // cheap deep clone
           // Do not rescale here - let the mask rescale handle this
           //                    p1[0] *= scale_applied;
           //                    p1[1] *= scale_applied;
           //                    p2[0] *= scale_applied;
           //                    p2[1] *= scale_applied;
-
           var polygon_part = [p1, p2];
           mask_vertices.push(polygon_part);
         }
       }
-
       detection.mask_vertices = mask_vertices;
     } else {
       caption = detection[visualizer_data.label_key]; // non demographic mode
-
-      if (caption && caption.constructor === String) {//It's a string
+      if (caption && caption.constructor === String) {
+        //It's a string
       } else {
         // some other type of object
         var keys = Object.keys(caption);
-
         if (keys.length == 1) {
           caption = caption[keys[0]]; // get the only property
         } else {
@@ -2966,26 +2861,22 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
         }
       }
     }
-
     if (detection.bounding_box) {
       detection.bounding_box[0] *= scale_applied;
       detection.bounding_box[1] *= scale_applied;
       detection.bounding_box[2] *= scale_applied;
       detection.bounding_box[3] *= scale_applied;
-    } // Note: this also handles pose results!
+    }
 
-
+    // Note: this also handles pose results!
     if (detection.mask_vertices) {
       var _iterator8 = _createForOfIteratorHelper(detection.mask_vertices),
-          _step8;
-
+        _step8;
       try {
         for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
           var part = _step8.value;
-
           var _iterator9 = _createForOfIteratorHelper(part),
-              _step9;
-
+            _step9;
           try {
             for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
               var point = _step9.value;
@@ -3004,17 +2895,14 @@ function process_annotations(input_struct, visualizer_data, scale_applied) {
         _iterator8.f();
       }
     }
-
     processed_annotations.push({
       bounding_box: detection.bounding_box,
       mask_vertices: detection.mask_vertices,
       caption: caption
     });
   }
-
   return processed_annotations;
 }
-
 module.exports = {
   renderResultIntoElement: renderResultIntoElement,
   renderAnnotatedResultIntoElement: renderAnnotatedResultIntoElement
@@ -3028,9 +2916,9 @@ module.exports = {
 "use strict";
 
 
-var DeepAI = __webpack_require__(297); // Create the default instance to be exported
+var DeepAI = __webpack_require__(297);
 
-
+// Create the default instance to be exported
 var deepai = new DeepAI();
 module.exports = deepai;
 
