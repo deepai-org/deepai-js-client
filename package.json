@@ -17,7 +17,7 @@
     "@babel/preset-env": "7.16.11",
     "babel-loader": "^8.2.3",
     "es6-promise": "4.2.8",
-    "grunt": "1.4.1",
+    "grunt": "^1.6.1",
     "grunt-banner": "^0.6.0",
     "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "2.0.0",
@@ -29,7 +29,7 @@
     "load-grunt-tasks": "5.1.0",
     "regenerator-runtime": "^0.13.11",
     "util": "^0.12.4",
-    "webpack": "5.68.0",
+    "webpack": "^5.88.2",
     "webpack-dev-server": "^4.7.4"
   },
   "scripts": {
