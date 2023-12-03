@@ -1,5 +1,7 @@
 # DeepAI JS Client
 
+This library is deprecated. Do not use for future projects.
+
 [![npm version](https://img.shields.io/npm/v/deepai.svg?style=flat-square)](https://www.npmjs.org/package/deepai)
 [![CodeQL](https://github.com/deepai-org/deepai-js-client/actions/workflows/codeql.yml/badge.svg)](https://github.com/deepai-org/deepai-js-client/actions/workflows/codeql.yml)
 
